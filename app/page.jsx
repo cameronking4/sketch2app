@@ -46,7 +46,7 @@ export const upload = async (persona, base64_img) => {
       messages: [
         {
           role: "system",
-          content: `You are an expert react developer. Create a react app.js page and use inline tailwind styling to replicate the exact image. No other strings as i will copy your response directly into a setup App.js file.`,
+          content: `You are an expert react developer. Create a react app.js page and use inline tailwind styling to replicate the exact image as the UI for a web application. No other strings as i will copy your response directly into a setup App.js file.`,
         },
         {
           role: "user",

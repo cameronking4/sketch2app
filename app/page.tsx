@@ -16,9 +16,10 @@ export default function Page() {
   const webcamRef = useRef();
 
   const capture = useCallback(async () => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setImg(imageSrc);
-
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setImg(imageSrc);
+    }
     // await upload(imageSrc);
   }, [webcamRef]);
 

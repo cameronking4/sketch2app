@@ -15,6 +15,9 @@ export default function Header() {
           sketch-to-code
         </h1>
       </Link>
+      <div>
+        Powered by{' '}gpt4-vision-preview
+      </div>
       {/* <a
         href="https://vercel.com/templates/next.js/twitter-bio"
         target="_blank"

@@ -13,13 +13,12 @@ import { Sandpack } from "@codesandbox/sandpack-react";
 
 export default function Page() {
   const [img, setImg] = useState(null);
-  const webcamRef = useRef();
+  const webcamRef = useRef<Webcam>(null);
 
   const capture = useCallback(async () => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
-      setImg(imageSrc);
-    }
+    const imageSrc = webcamRef.current.getScreenshot();
+    setImg(imageSrc);
+
     // await upload(imageSrc);
   }, [webcamRef]);
 

@@ -11,12 +11,31 @@ import { useChat } from 'ai/react';
 import Webcam from "react-webcam";
 import axios from "axios";
 import { Sandpack } from "@codesandbox/sandpack-react";
+import ReactMarkdown from 'react-markdown' 
+
 
 const OAI_APIKEY = "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"
 
 function removeBackticksAndJSX(inputString) {
   const result = inputString.replace(/```|jsx|\n/g, '');
   return result;
+}
+
+function extractCodeFromString(inputString) {
+  // Define the start and end markers of the code segment
+  const codeStartMarker = "import React from 'react';";
+  const codeEndMarker = "export default App;";
+
+  // Find the start and end indices of the code within the string
+  const startIndex = inputString.indexOf(codeStartMarker);
+  const endIndex = inputString.indexOf(codeEndMarker) + codeEndMarker.length;
+
+  // Extract and return the code segment
+  if (startIndex !== -1 && endIndex !== -1) {
+      return inputString.substring(startIndex, endIndex);
+  } else {
+      return "Code segment not found.";
+  }
 }
 
 export const upload = async (persona, base64_img) => {
@@ -55,8 +74,8 @@ export const upload = async (persona, base64_img) => {
     }
   );
   let msg = res.data.choices[0].message.content;
-  console.log(msg);
-  return removeBackticksAndJSX(msg);
+  console.log(removeBackticksAndJSX(msg));
+  return msg;
 };
 
 export default function Page() {
@@ -92,46 +111,27 @@ export default function Page() {
          {response ? 'Voila! Try your code' : 'Generate code from a hand-drawn sketch'}
         </h1>
         <br />
-        { response ? <Sandpack
-            template="react"
-            customSetup={{
-              dependencies: {
-                "react-markdown": "latest",
-                "tailwindcss": "latest",
-                "postcss": "latest",
-                "autoprefixer": "latest"
-              },
-              files: {
-                "/App.js": `
-                ${response}
-                `,
-                "/index.css": `
-                  @tailwind base;
-                  @tailwind components;
-                  @tailwind utilities;
-                `,
-                "/postcss.config.js": `
-                  module.exports = {
-                    plugins: {
-                      tailwindcss: {},
-                      autoprefixer: {},
-                    },
-                  }
-                `,
-                "/tailwind.config.js": `
-                  module.exports = {
-                    content: [
-                      "./src/**/*.{js,jsx,ts,tsx}",
-                    ],
-                    theme: {
-                      extend: {},
-                    },
-                    plugins: [],
-                  }
-                `
-              }
-            }}
-          />
+        { response ? <div className='w-full'>
+          <Sandpack
+          height="700"
+          className="px-10"
+    files={{
+      '/App.js': `${extractCodeFromString(response)}`,
+    }}
+    options={{
+      externalResources: [
+        'https://unpkg.com/@tailwindcss/ui/dist/tailwind-ui.min.css',
+      ],
+      editorHeight:700,
+        layout: "preview", // preview | tests | console
+    }}
+    template="react"
+  />
+          <br/>
+    <ReactMarkdown>
+       {response}
+    </ReactMarkdown>
+          </div>
       : 
         <>
         {/* <p className="text-slate-500 mt-2">47,118 bios generated so far.</p> */}
@@ -172,11 +172,8 @@ export default function Page() {
           </>
           ) : (
           <>
-            <img className='mt-2' width="800" height="600" src={img} alt="screenshot" />
-            <div style={{ color: "#ffffff", padding: "15px 0" }}>
-              GPT-4V is crunching numbers...
-            </div>
-            <div className="flex mb-5 items-center space-x-3">
+            <img className='mt-2' width="100%" height="100%" src={img} alt="screenshot" />
+            <div className="flex mt-5 mb-5 items-center space-x-3">
             <Image src="/2-black.png" width={30} height={30} alt="1 icon" />
             <p className="text-left font-medium">What kind of project?</p>
             </div>

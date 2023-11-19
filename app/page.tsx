@@ -19,7 +19,7 @@ export default function Page() {
     const imageSrc = webcamRef.current.getScreenshot();
     setImg(imageSrc);
 
-    await upload(imageSrc);
+    // await upload(imageSrc);
   }, [webcamRef]);
 
   const [bio, setBio] = useState('');

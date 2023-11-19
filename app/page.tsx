@@ -9,11 +9,10 @@ import Github from '../components/GitHub';
 import Header from '../components/Header';
 import { useChat } from 'ai/react';
 import Webcam from "react-webcam";
-import { Sandpack } from "@codesandbox/sandpack-react";
 
 export default function Page() {
   const [img, setImg] = useState(null);
-  const webcamRef = useRef<Webcam>(null);
+  const webcamRef = useRef();
 
   const capture = useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -55,7 +54,7 @@ export default function Page() {
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
-      <h1 className="sm:text-6xl text-4xl max-w-[70%] font-bold text-slate-900">
+      <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
           Generate code from a hand-drawn sketch
         </h1>
         {/* <p className="text-slate-500 mt-2">47,118 bios generated so far.</p> */}
@@ -147,10 +146,9 @@ export default function Page() {
                   className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
                   ref={bioRef}
                 >
-                  Your generated project
+                  Your generated bios
                 </h2>
               </div>
-              <Sandpack template="react" />;
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
                 {generatedBios
                   .substring(generatedBios.indexOf('1') + 3)

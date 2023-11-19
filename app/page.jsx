@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRef, useState, useCallback } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
-import DropDown, { VibeType } from '../components/DropDown';
+import DropDown from '../components/DropDown';
 import Footer from '../components/Footer';
 import Github from '../components/GitHub';
 import Header from '../components/Header';
@@ -26,8 +26,8 @@ export default function Page() {
   }, [webcamRef]);
 
   const [bio, setBio] = useState('');
-  const [vibe, setVibe] = useState<VibeType>('React');
-  const bioRef = useRef<null | HTMLDivElement>(null);
+  const [vibe, setVibe] = useState('React');
+  const bioRef = useRef(null);
 
   const scrollToBios = () => {
     if (bioRef.current !== null) {
@@ -46,7 +46,7 @@ export default function Page() {
       },
     });
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e) => {
     setBio(input);
     handleSubmit(e);
   };

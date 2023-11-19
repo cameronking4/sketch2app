@@ -6,20 +6,13 @@ import {
 } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
 
-function classNames(...classes: string[]) {
+function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export type VibeType = "React" | "Python" | "React Native" | "Flutter";
+let vibes = ["React", "Python", "React Native", "Flutter"];
 
-interface DropDownProps {
-  vibe: VibeType;
-  setVibe: (vibe: VibeType) => void;
-}
-
-let vibes: VibeType[] = ["React", "Python", "React Native", "Flutter"];
-
-export default function DropDown({ vibe, setVibe }: DropDownProps) {
+export default function DropDown({ vibe, setVibe }) {
   return (
     <Menu as="div" className="relative block text-left w-full">
       <div>

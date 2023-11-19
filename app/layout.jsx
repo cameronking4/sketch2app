@@ -5,7 +5,7 @@ import '../styles/globals.css';
 const title = 'Twitter Bio Generator';
 const description = 'Generate your next Twitter bio in seconds.';
 
-export const metadata: Metadata = {
+export const metadata = {
   metadataBase: new URL('https://twitterbio.io'),
   title,
   description,
@@ -22,11 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>

@@ -13,6 +13,7 @@
     "@tailwindcss/forms": "^0.5.3",
     "@vercel/analytics": "^0.1.8",
     "ai": "^2.1.21",
+    "axios": "^1.6.2",
     "next": "^13.4.10",
     "openai-edge": "^1.2.0",
     "react": "18.2.0",

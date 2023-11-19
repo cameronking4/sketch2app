@@ -2,8 +2,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import '../styles/globals.css';
 
-const title = 'Twitter Bio Generator';
-const description = 'Generate your next Twitter bio in seconds.';
+const title = 'Sketch2Code';
+const description = 'Generate boilerplate UI code from your sketches.';
 
 export const metadata = {
   metadataBase: new URL('https://twitterbio.io'),

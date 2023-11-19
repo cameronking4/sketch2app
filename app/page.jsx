@@ -14,6 +14,11 @@ import { Sandpack } from "@codesandbox/sandpack-react";
 
 const OAI_APIKEY = "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"
 
+function removeBackticksAndJSX(inputString) {
+  const result = inputString.replace(/```|jsx|\n/g, '');
+  return result;
+}
+
 export const upload = async (persona, base64_img) => {
   const res = await axios.post(
     "https://api.openai.com/v1/chat/completions",
@@ -22,7 +27,7 @@ export const upload = async (persona, base64_img) => {
       messages: [
         {
           role: "system",
-          content: `You are an expert react developer. Create a react app.js page and use inline tailwind styling to replicate the exact image. Then return to me the exact snippet for a sandpack so i can this immediately, no other strings as i will copy your response as direct sandpack code.`,
+          content: `You are an expert react developer. Create a react app.js page and use inline tailwind styling to replicate the exact image. No other strings as i will copy your response directly into a setup App.js file.`,
         },
         {
           role: "user",
@@ -51,11 +56,7 @@ export const upload = async (persona, base64_img) => {
   );
   let msg = res.data.choices[0].message.content;
   console.log(msg);
-  const lines = msg.split("\n");
-  if (lines.length > 1 && lines[0].includes("```")) {
-    msg = msg.split("\n").slice(1, -1).join("\n");
-  }
-  return msg;
+  return removeBackticksAndJSX(msg);
 };
 
 export default function Page() {

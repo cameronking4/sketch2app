@@ -15,8 +15,7 @@ export default function Page() {
   const webcamRef = useRef();
 
   const capture = useCallback(async () => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
+      const imageSrc = webcamRef?.current.getScreenshot();
       if (imageSrc) {
         setImg(imageSrc);
         // await upload(imageSrc);
@@ -24,10 +23,6 @@ export default function Page() {
         // Handle the case where the screenshot couldn't be captured
         console.error("Failed to capture screenshot from webcam");
       }
-    } else {
-      // Handle the case where the webcam is not available or not initialized
-      console.error("Webcam is not initialized");
-    }
   }, [webcamRef]);
 
   const [bio, setBio] = useState('');

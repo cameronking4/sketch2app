@@ -1,6 +1,6 @@
-# [twitterbio.io](https://www.twitterbio.io/)
+# [sketch2code.app](https://www.sketch2code.app/)
 
-This project generates Twitter bios for you using AI.
+This project generates React + Tailwindcss web app code based on a quick sketch on paper for you using AI, specifically gpt4-vision-preview.
 
 [![Twitter Bio Generator](./public/screenshot.png)](https://www.twitterbio.io)
 

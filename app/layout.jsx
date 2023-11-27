@@ -6,7 +6,7 @@ const title = 'Sketch2Code';
 const description = 'Generate boilerplate UI code from your sketches.';
 
 export const metadata = {
-  metadataBase: new URL('https://twitterbio.io'),
+  metadataBase: new URL('https://sketch2code.app'),
   title,
   description,
   openGraph: {

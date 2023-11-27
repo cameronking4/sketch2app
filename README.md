@@ -2,7 +2,7 @@
 
 This project generates React + Tailwindcss web app code based on a quick sketch on paper for you using AI, specifically gpt4-vision-preview.
 
-[![Twitter Bio Generator](./public/screenshot.png)](https://www.twitterbio.io)
+[![Sketch2Code](./public/sketch2code.png)](https://www.sketch2code.app)
 
 ## How it works
 

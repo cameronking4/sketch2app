@@ -7,7 +7,7 @@ module.exports = {
     return [
       {
         source: '/github',
-        destination: 'https://github.com/cameronking4/sketch2code'
+        destination: 'https://github.com/cameronking4/sketch2code',
         permanent: false,
       },
       {

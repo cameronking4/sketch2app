@@ -14,7 +14,7 @@ import { Sandpack } from "@codesandbox/sandpack-react";
 import ReactMarkdown from 'react-markdown' 
 
 
-const OAI_APIKEY = "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"
+const OAI_APIKEY = process.env.OPENAI_API_KEY;
 
 export const upload = async (persona, base64_img) => {
   const res = await axios.post(

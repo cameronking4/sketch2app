@@ -1,7 +1,8 @@
 # [sketch2code.app](https://www.sketch2code.app/)
 
+## Use gpt4-vision-preview to generate web app code (CRA + Tailwind)
 This project generates React + Tailwindcss web app code based on a quick sketch on paper for you using AI, specifically gpt4-vision-preview.
-
+https://github.com/cameronking4/sketch2code/raw/main/screenrun-11-27-2023-09-20-49.mp4
 [![Sketch2Code](./public/sketch2code.png)](https://www.sketch2code.app)
 
 ## How it works

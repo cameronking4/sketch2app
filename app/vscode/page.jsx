@@ -5,21 +5,21 @@ import { useRef, useState, useCallback } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import DropDown from '../../components/DropDown';
 import Footer from '../../components/Footer';
-import Sandbox from '../../components/Sandpack';
 import Header from '../../components/VSHeader';
-import { useChat } from 'ai/react';
 import Webcam from "react-webcam";
 import axios from "axios";
-import { Sandpack } from "@codesandbox/sandpack-react";
-import ReactMarkdown from 'react-markdown' 
+import { useSearchParams } from 'next/navigation'
 
 export default function Page() {
   const [img, setImg] = useState(null);
   const webcamRef = useRef();
   const [vibe, setVibe] = useState('React');
   const [generating, isGenerating] = useState(false);
-  const [regenerating, isRegenerating] = useState(false);
   const [response, setResponse] = useState(null);
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get('sessionId');
+
+  const OAI_APIKEY = process.env.OPENAI_API_KEY;
 
   const capture = useCallback(async () => {
       const imageSrc = webcamRef?.current.getScreenshot();
@@ -32,7 +32,60 @@ export default function Page() {
       }
   }, [webcamRef]);
 
-  const [responseText, setResponseText] = useState('');
+  const sketch2codeAPI = async (string) => {
+    let data = JSON.stringify({
+      "image": img,
+      "openai_key": OAI_APIKEY,
+      "uuid": sessionId
+    });
+
+    try {
+      const res = await axios.post(
+        `https://sketch2code-api.onrender.com/${string}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.error("Error in sketch2codeAPI:", error);
+      return null;  // Handle errors gracefully
+    }
+  }
+
+  const generateCode = async () => {
+    isGenerating(true);  // Indicate loading state
+    let res = "";
+    try {
+      switch (vibe) {
+        case 'React':
+          res = await sketch2codeAPI('react');
+          setResponse(res.data);
+          break;
+        case'Python':
+          res = await sketch2codeAPI('python');
+          setResponse(res.data);
+          break;
+        case 'Flutter':
+          res = await sketch2codeAPI('flutter');
+          setResponse(res.data);
+          break;
+        case 'React Native':
+          res = await sketch2codeAPI('react-native');
+          setResponse(res.data);
+          break;
+    }
+  } catch (error) {
+    console.error("Error in generateCode:", error);
+  }
+    isGenerating(false);  // Reset loading state
+    return res.data;
+    // Close tab (if needed, implement tab closing logic here)
+  }
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -110,7 +163,8 @@ export default function Page() {
           ) : (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-4 mt-4 hover:bg-black/80 w-full"
-              onClick={() => sendUpload()}
+              onClick={() => generateCode()}
+              // onClick={() => console.log(vibe)}
             >
               Submit & Exit to VS Code &rarr;
             </button>

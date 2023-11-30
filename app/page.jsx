@@ -81,6 +81,7 @@ export default function Page() {
   const sendUpload = async() => {
     isGenerating(true);
     const response = await upload(vibe, img);
+    toast.success("Success!")
     setResponse(response);
   }
 
@@ -99,6 +100,13 @@ export default function Page() {
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+      <div>
+          <Toaster
+          position="top-center"
+          reverseOrder={true}
+          toastOptions={{ duration: 10000 }}
+        />
+      </div>
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
       <h2 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
@@ -235,11 +243,6 @@ export default function Page() {
           </span>
         </button>)}
         </div>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          toastOptions={{ duration: 2000 }}
-        />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         {/* <output className="space-y-10 my-10">
           {response}

@@ -20,6 +20,7 @@ export default function Page() {
   const sessionId = searchParams.get('sessionId');
 
   const OAI_APIKEY = process.env.OPENAI_API_KEY;
+  const BASE_API_URL = process.env.BASE_API_URL;
 
   const capture = useCallback(async () => {
       const imageSrc = webcamRef?.current.getScreenshot();
@@ -47,6 +48,20 @@ export default function Page() {
           headers: {
             "Content-Type": "application/json",
           }
+        }
+      );
+      toast.success("Success!");
+      toast("Feel free to close this page now & return back to VSCode editor.",
+        {
+          duration: 25000,
+          icon: '🙌',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+            fontSize: '16px'
+          },
+
         }
       );
       console.log(res.data);
@@ -89,6 +104,13 @@ export default function Page() {
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+      <div>
+      <Toaster
+          position="top-center"
+          reverseOrder={true}
+          toastOptions={{ duration: 10000 }}
+        />
+      </div>
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
       <h2 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
@@ -183,11 +205,6 @@ export default function Page() {
           </span>
         </button>)}
         </div>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          toastOptions={{ duration: 2000 }}
-        />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         </>
         }

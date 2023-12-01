@@ -42,8 +42,7 @@ export default function Page() {
 
     try {
       const res = await axios.post(
-       // https://sketch2code-api.onrender.com/${string}`,
-        `https://reimagined-carnival-vgq9vxqv7gv3w5g9-5000.app.github.dev${string}`,
+        `https://sketch2code-api.onrender.com/${string}`,
         data,
         {
           headers: {

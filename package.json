@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.13.0",
     "@codesandbox/sandpack-react": "^2.10.0",
     "@codesandbox/sandpack-themes": "^2.0.21",
     "@headlessui/react": "^1.7.7",
@@ -15,6 +17,7 @@
     "@vercel/analytics": "^0.1.8",
     "ai": "^2.1.21",
     "axios": "^1.6.2",
+    "cloudinary": "^1.41.0",
     "next": "^13.4.10",
     "openai-edge": "^1.2.0",
     "react": "18.2.0",

@@ -21,16 +21,46 @@ export default function Page() {
 
   const OAI_APIKEY = process.env.OPENAI_API_KEY;
   const BASE_API_URL = process.env.BASE_API_URL;
+  const CLOUDINARY_APISECRET = process.env.CLOUDINARY_APISECRET;
+  const CLOUDINARY_APIKEY = process.env.CLOUDINARY_APIKEY;
+  const CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
+
+  const uploadToCloudinary = async (imageBase64) => {
+    const formData = new FormData();
+    formData.append('file', imageBase64);
+    formData.append('api_key', CLOUDINARY_APIKEY);
+    formData.append('api_secret', CLOUDINARY_APISECRET);
+    formData.append('timestamp', (Date.now() / 1000) | 0);
+    formData.append('upload_preset', 'ml_default');
+  
+    try {
+      const response = await axios.post(CLOUDINARY_UPLOAD_URL, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      return response.data.secure_url; // Returns the URL of the uploaded image
+    } catch (error) {
+      console.error("Error uploading to Cloudinary:", error);
+      return null; // Handle upload errors gracefully
+    }
+  };
 
   const capture = useCallback(async () => {
-      const imageSrc = webcamRef?.current.getScreenshot();
-      if (imageSrc) {
-        setImg(imageSrc);
-        // await upload(imageSrc);
-      } else {
-        // Handle the case where the screenshot couldn't be captured
-        console.error("Failed to capture screenshot from webcam");
-      }
+    const imageSrc = webcamRef?.current.getScreenshot();
+    if (imageSrc) {
+      const cloudinaryUrl = await uploadToCloudinary(imageSrc);
+      if (cloudinaryUrl) {
+        console.log("Sketch URL:", cloudinaryUrl); // Logging the Cloudinary URL
+        setImg(cloudinaryUrl);
+        // Proceed with your API call using cloudinaryUrl instead of imageSrc
+      } else { // Handle the case where the image upload failed
+        console.error("Failed to upload image to Cloudinary");
+      } 
+    } else {
+      // Handle the case where the screenshot couldn't be captured
+      console.error("Failed to capture screenshot from webcam");
+    }
   }, [webcamRef]);
 
   const sketch2codeAPI = async (string) => {
@@ -42,7 +72,8 @@ export default function Page() {
 
     try {
       const res = await axios.post(
-        `https://sketch2code-api.onrender.com/${string}`,
+        // `https://sketch2code-api.onrender.com/${string}`,
+        `http://localhost:5000/${string}`,
         data,
         {
           headers: {
@@ -114,7 +145,7 @@ export default function Page() {
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
       <h2 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-         {response ? `Voila! Try your ${vibe} code` : 'Generate code from a hand-drawn sketch'}
+         {response ? `Voila! Try your ${vibe} code` : 'Capture your sketch to generate code'}
         </h2>
         { response ?
         <div className='w-full'>
@@ -138,14 +169,7 @@ export default function Page() {
         <div className="max-w-xl w-full">
        
           <div className="flex mt-10 items-center space-x-3">
-            <Image
-              src="/1-black.png"
-              width={30}
-              height={30}
-              alt="1 icon"
-              className="mb-5 sm:mb-0"
-            />
-            <p className="text-left font-medium">
+           <p className="text-left font-medium">
               Submit your sketch.{' '}
               <span className="text-slate-500">
                 (doesn't need to be perfect)
@@ -165,12 +189,11 @@ export default function Page() {
           ) : (
           <>
             <img className='mt-2' width="100%" height="100%" src={img} alt="screenshot" />
-            <div className="flex mt-5 mb-5 items-center space-x-3">
-            <Image src="/2-black.png" width={30} height={30} alt="1 icon" />
-            <p className="text-left font-medium">What kind of project?</p>
+            <br/>
+            <div className="block">
+              <button> Retake sketch </button>
             </div>
-           <div className="block">
-            <DropDown vibe={vibe} setVibe={(newVibe) => setVibe(newVibe)} />
+            <div className="flex mb-5 items-center space-x-3">
             </div>
           </>
         )}

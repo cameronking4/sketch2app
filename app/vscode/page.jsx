@@ -19,11 +19,11 @@ export default function Page() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
 
-  const OAI_APIKEY = process.env.OPENAI_API_KEY;
+  const OAI_APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
   const BASE_API_URL = process.env.BASE_API_URL;
-  const CLOUDINARY_APISECRET = process.env.CLOUDINARY_APISECRET;
-  const CLOUDINARY_APIKEY = process.env.CLOUDINARY_APIKEY;
-  const CLOUDINARY_UPLOAD_URL = process.env.CLOUDINARY_UPLOAD_URL;
+  const CLOUDINARY_APISECRET = process.env.NEXT_PUBLIC_CLOUDINARY_APISECRET;
+  const CLOUDINARY_APIKEY = process.env.NEXT_PUBLIC_CLOUDINARY_APIKEY;
+  const CLOUDINARY_UPLOAD_URL = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL;
 
   const uploadToCloudinary = async (imageBase64) => {
     const formData = new FormData();

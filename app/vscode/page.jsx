@@ -13,12 +13,12 @@ import { useSearchParams } from 'next/navigation'
 export default function Page() {
   const [img, setImg] = useState(null);
   const webcamRef = useRef();
-  const [vibe, setVibe] = useState('React');
   const [generating, isGenerating] = useState(false);
   const [response, setResponse] = useState(null);
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
-
+  const [vibe, setVibe] = searchParams.get('type');
+  const [path, setPath] = searchParams.get('path');
   const OAI_APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
   const BASE_API_URL = process.env.BASE_API_URL;
   const CLOUDINARY_APISECRET = process.env.NEXT_PUBLIC_CLOUDINARY_APISECRET;
@@ -120,7 +120,7 @@ export default function Page() {
           res = await sketch2codeAPI('flutter');
           setResponse(res.data);
           break;
-        case 'React Native':
+        case 'React-Native':
           res = await sketch2codeAPI('react-native');
           setResponse(res.data);
           break;

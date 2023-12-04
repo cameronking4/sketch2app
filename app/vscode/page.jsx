@@ -17,8 +17,8 @@ export default function Page() {
   const [response, setResponse] = useState(null);
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
-  const [vibe, setVibe] = searchParams.get('type');
-  const [path, setPath] = searchParams.get('path');
+  const vibe = searchParams.get('type');
+  const folderPath = searchParams.get('path');
   const OAI_APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
   const BASE_API_URL = process.env.BASE_API_URL;
   const CLOUDINARY_APISECRET = process.env.NEXT_PUBLIC_CLOUDINARY_APISECRET;

@@ -17,7 +17,7 @@ export default function Footer() {
           </svg>
         </Link>
         <Link
-          href="https://github.com/cameronking4/sketch2code"
+          href="https://github.com/cameronking4/sketch2app"
           className="group"
           aria-label="GitHub"
         >

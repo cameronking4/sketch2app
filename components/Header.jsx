@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="flex justify-between items-center w-full border-b-2 pb-4 sm:px-4 px-2">
-      <Link href="https://sketch2code.app/" className="flex space-x-3">
+      <Link href="https://sketch2app.io/" className="flex space-x-3">
         <Image
           alt="header text"
           src="/writingIcon.png"

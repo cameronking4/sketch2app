@@ -1,4 +1,4 @@
-import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from "@codesandbox/sandpack-react";
+import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview} from "@codesandbox/sandpack-react";
 
 export default function Sandbox({ Appjs }) {
 
@@ -69,7 +69,19 @@ export default function Sandbox({ Appjs }) {
           "react-scripts": "latest",
           "tailwindcss": "latest",
           "postcss": "latest",
-          "autoprefixer": "latest"
+          "autoprefixer": "latest",
+          "axios": "latest", // For making HTTP requests
+          "react-router-dom": "latest", // For routing
+          "redux": "latest", // For state management
+          "react-redux": "latest", // React bindings for Redux
+          "redux-thunk": "latest", // Middleware for Redux asynchronous actions
+          "styled-components": "latest", // For CSS in JS
+          "react-icons": "latest", // A set of free MIT-licensed high-quality SVG icons
+          "lodash": "latest", // A modern JavaScript utility library delivering modularity, performance, & extras
+          "moment": "latest", // Parse, validate, manipulate, and display dates and times in JavaScript
+          "react-query": "latest", // Hooks for fetching, caching and updating asynchronous data in React
+          "react-toastify": "latest", // For adding notifications to your app
+          "react-helmet": "latest" // A document head manager for React
         }
       };
       
@@ -77,17 +89,15 @@ export default function Sandbox({ Appjs }) {
       const options = {
         externalResources: [
           'https://unpkg.com/@tailwindcss/ui/dist/tailwind-ui.min.css',
-        ],
-        editorHeight: 700,
-        editorWidthPercentage: 35,
+        ]
       };
       return (
         <SandpackProvider template="react" files={files} customSetup={customSetup} options={options}>
           <SandpackLayout options={options}>
-            <SandpackCodeEditor options={options} />
-            <SandpackPreview />
+          <SandpackPreview style={{ height: '60vh' }} />
           </SandpackLayout>
         </SandpackProvider>
+        
       );
 }
 

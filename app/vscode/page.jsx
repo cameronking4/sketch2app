@@ -72,8 +72,7 @@ export default function Page() {
 
     try {
       const res = await axios.post(
-        // `https://sketch2code-api.onrender.com/${string}`,
-        `http://localhost:5000/${string}`,
+        `https://sketch2code-api.onrender.com/${string}`,
         data,
         {
           headers: {

@@ -14,13 +14,13 @@ export default function Page() {
   const [img, setImg] = useState(null);
   const webcamRef = useRef();
   const [generating, isGenerating] = useState(false);
+  const [complete, isComplete] = useState(false);
   const [response, setResponse] = useState(null);
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
   const vibe = searchParams.get('type');
-  const folderPath = searchParams.get('path');
-  const OAI_APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-  const BASE_API_URL = process.env.BASE_API_URL;
+  const folderPath = searchParams.get('folder');
+  const OAI_APIKEY = process.env.OPENAI_API_KEY;  
   const CLOUDINARY_APISECRET = process.env.NEXT_PUBLIC_CLOUDINARY_APISECRET;
   const CLOUDINARY_APIKEY = process.env.NEXT_PUBLIC_CLOUDINARY_APIKEY;
   const CLOUDINARY_UPLOAD_URL = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL;
@@ -102,34 +102,38 @@ export default function Page() {
     }
   }
 
-  const generateCode = async () => {
-    isGenerating(true);  // Indicate loading state
-    let res = "";
-    try {
-      switch (vibe) {
-        case 'React':
-          res = await sketch2codeAPI('react');
-          setResponse(res.data);
-          break;
-        case'Python':
-          res = await sketch2codeAPI('python');
-          setResponse(res.data);
-          break;
-        case 'Flutter':
-          res = await sketch2codeAPI('flutter');
-          setResponse(res.data);
-          break;
-        case 'React-Native':
-          res = await sketch2codeAPI('react-native');
-          setResponse(res.data);
-          break;
+  const launchVSCode = async (path) => {
+    if (path.length > 5) {
+      // Decode URL-encoded characters
+      const decodedPath = decodeURIComponent(path);
+      // Replace backslashes with forward slashes for compatibility (if necessary)
+      const formattedPath = decodedPath.replace(/\\/g, '/');
+      const vscodeUrl = `vscode://file/${formattedPath}`;
+      window.open(vscodeUrl);
     }
-  } catch (error) {
-    console.error("Error in generateCode:", error);
   }
-    isGenerating(false);  // Reset loading state
-    return res.data;
-    // Close tab (if needed, implement tab closing logic here)
+
+  const generateCode = async () => {
+    isGenerating(true); // Indicate loading state
+    try {
+      const languages = ['React', 'Python', 'Flutter', 'React-Native'];
+      if (languages.includes(vibe)) {
+        const res = await sketch2codeAPI(vibe.toLowerCase());
+        setResponse(res.data);
+        isComplete(true);
+        isGenerating(false); // Reset loading state
+        return res ? res.data : null;
+      } else {
+        const res = await sketch2codeAPI('react');
+        setResponse(res.data);
+        isComplete(true);
+        launchVSCode(folderPath);
+        isGenerating(false); // Reset loading state
+        return res ? res.data : null;
+      }
+    } catch (error) {
+      console.error("Error in generateCode:", error);
+    }     
   }
 
   return (
@@ -144,9 +148,9 @@ export default function Page() {
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
       <h2 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-         {response ? `Voila! Try your ${vibe} code` : 'Capture your sketch to generate code'}
-        </h2>
-        { response ?
+         {complete ? `Voila! Try your ${vibe} code` : 'Capture your sketch to generate code'}
+      </h2>
+      { response ?
         <div className='w-full'>
           <button
             className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
@@ -158,7 +162,6 @@ export default function Page() {
             <span style={{ backgroundColor: 'white' }} />
           </span>
         </button>
-        
         <br/>
         <br />
       </div>
@@ -217,7 +220,7 @@ export default function Page() {
          </>
          ):
          (<button
-          className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
+          className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-4 mt-4 hover:bg-black/80 w-full"
           disabled
         >
           <span className="loading">

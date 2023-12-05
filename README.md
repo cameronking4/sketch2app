@@ -1,4 +1,4 @@
-# [sketch2app](https://www.sketch2app.io/)
+# [Sketch-2-App](https://www.sketch2app.io/)
 
 ## Use GPT4v to generate web app code (CRA + Tailwind)
 The best draw 2 code open source app!!! Generates React + Tailwindcss web app code based on a quick sketch on paper for you using AI, specifically gpt4 vision preview.

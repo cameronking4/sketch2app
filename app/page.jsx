@@ -7,7 +7,7 @@ import DropDown from '../components/DropDown';
 import Footer from '../components/Footer';
 import Sandbox from '../components/Sandpack';
 import Header from '../components/Header';
-import { useChat } from 'ai/react';
+import ConfettiExplosion from 'confetti-explosion-react';
 import Webcam from "react-webcam";
 import axios from "axios";
 
@@ -25,10 +25,9 @@ const reactPrompt =
   "redux": "latest", // For state management
   "react-redux": "latest", // React bindings for Redux
   "redux-thunk": "latest", // Middleware for Redux asynchronous actions
-  "styled-components": "latest", // For CSS in JS
   "react-icons": "latest", // A set of free MIT-licensed high-quality SVG icons
-- But remember to add them as imports at the top of App.js file. 
-- Be helpful by going beyond UI and layout and implement all inferrable functions and use icons. 
+- Remember to add them as imports at the top of App.js file. 
+- Be helpful by going beyond UI and layout and implement all inferrable functions. 
 - Make multiple components within file and reference them in App() if you need to.
 DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.`
 
@@ -111,12 +110,6 @@ But remember to add them as imports at the top of App.js file.
 DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.
 `
 
-const flutterPrompt = 
-`It is your job to generate a main.dart file to replicate this sketch as best as possible.`
-
-const pythonPrompt = 
-`It is your job to generate an python main.py file. Use streamlit to generate the UI.`
-
 const setPrompt = (prompt) => {
   return `You are the world renowned Sketch2App tool. Given a sketch, you can generate a full fledged app.
   ASSIGNMENT:
@@ -133,12 +126,8 @@ export const upload = async (vibe, base64_img) => {
      prompt = setPrompt(reactPrompt);
   } else if(vibe === 'React Native') {
      prompt = setPrompt(reactNativePrompt);
-  } else if(vibe === 'Flutter') {
-     prompt = setPrompt(flutterPrompt);
-  } else if(vibe === 'Python') {
-     prompt = setPrompt(pythonPrompt);
   }
-  console.log(prompt, base64_img);
+
   const res = await axios.post(
     "https://api.openai.com/v1/chat/completions",
     {
@@ -179,7 +168,7 @@ export const upload = async (vibe, base64_img) => {
   return msg;
 };
 
-// GPT4 request to adjust the generated file with user edits
+// GPT4 request to adjust the generated code with user edits
 export const reDo = async (response, textEdits, base64_img) => {
   console.log("base64", base64_img);
   const res = await axios.post(
@@ -189,7 +178,7 @@ export const reDo = async (response, textEdits, base64_img) => {
       messages: [
         {
           role: "system",
-          content: `You are an expert developer. Create a full fledged protoype for the sketch provided. You generated the code submitted and user has revisions. Go beyond UI by implementing inferrable functions or icons, helping the user take this several steps forward. 
+          content: `You are an expert developer. Create a full fledged protoype for the sketch provided. You generated the code submitted and our user has revisions. Try to go beyond UI by implementing functions, adding modals alerts, navigation and icons. 
           Adjust the following code:
           ${response}
           Your response must always be a string with the lines of code, no explanation or helper text. Do not include backticks or explainer text in the response.
@@ -208,7 +197,7 @@ export const reDo = async (response, textEdits, base64_img) => {
         },
         {
           role: "user",
-          content: `Edit the following file. I want to: ${textEdits}. Your response should not include backticks or synax formatting.`,
+          content: `Edit the following file. I want to: ${textEdits}. Your response should not include backticks or synax formatting. Ensure you import all dependencies and add them to the top of the file.`,
         },
       
       ],
@@ -265,14 +254,25 @@ export default function Page() {
         }
         toast.success("Regenerated!");
         isRegenerating(false);
+        setResponseText('');
     }
 
     const regenerateContent = async () => {
         await regenerate();
     };
 
+    const confetti = {
+        force: 0.65,
+        duration: 4500,
+        particleCount: 250,
+        height: 1600,
+        width: 1600
+      }
+
+
     return (
-      <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+      <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen overflow-hidden">
+        { response && <ConfettiExplosion {...confetti} style={{overflow: 'hidden'}}/> }
           <div>
               <Toaster
                   position="top-center"
@@ -280,14 +280,14 @@ export default function Page() {
                   toastOptions={{ duration: 10000 }}
               />
           </div>
-          <Header />
+          <Header/>
           <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
               <h2 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
                   {response ? `Voila! Try your ${vibe} code` : 'Generate code from a hand-drawn sketch'}
               </h2>
               {response ? (
                   <div className='w-full'>
-                      <br />
+                      <br/>
                       <Sandbox mainFile={response} framework={vibe}/>
                       {regenerating ?
                         <button
@@ -364,7 +364,7 @@ export default function Page() {
                                       <p className="text-left font-medium">What kind of project?</p>
                                   </div>
                                   <div className="block">
-                                      <DropDown vibe={vibe} setVibe={(newVibe) => setVibe(newVibe)} />
+                                      <DropDown generating={generating} vibe={vibe} setVibe={(newVibe) => setVibe(newVibe)} />
                                   </div>
                               </>
                           )}

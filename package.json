@@ -18,6 +18,7 @@
     "ai": "^2.1.21",
     "axios": "^1.6.2",
     "cloudinary": "^1.41.0",
+    "confetti-explosion-react": "^0.1.2",
     "next": "^13.4.10",
     "openai-edge": "^1.2.0",
     "react": "18.2.0",

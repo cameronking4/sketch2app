@@ -145,8 +145,8 @@ export default function Sandbox({ mainFile, framework }) {
           code:`
         {
           "expo": {
-            "name": "React Native with Expo on CodeSandbox",
-            "slug": "react-native-codesandbox",
+            "name": "Sketch2App Demo App",
+            "slug": "react-native-sketch2app",
             "version": "1.0.0",
             "orientation": "portrait",
             "icon": "./assets/icon.png",
@@ -182,13 +182,28 @@ export default function Sandbox({ mainFile, framework }) {
         };`
         }
       }
-      const files = framework === "React" ? reactFiles : null || framework === "React Native" ? rnFiles : null;
+      // Determine the correct settings based on the framework
+      let files, template, customSetup;
+      if (framework === "React") {
+          files = reactFiles;
+          template = "react";
+          customSetup = reactSetup;
+      } else if (framework === "React Native") {
+          files = rnFiles;
+          template = "react"; 
+          customSetup = rnSetup;
+      } else {
+          // Default or fallback settings, if any, can be specified here
+          files = null;
+          template = null;
+          customSetup = null;
+      }
       return (
-        <SandpackProvider template={ framework === "React" || framework === "React Native" ?  "react" : null} files={files} customSetup={ framework === "React" ? reactSetup : framework === "React Native" ? rnSetup : null} options={framework === "React" ? options : null}>
-        <SandpackLayout style={{ flexDirection: 'column', height: '85vh' }} options={options}>
-        <SandpackPreview style={{ flexGrow: 9 }} />
-        <SandpackConsole style={{ flexGrow: 1 }} />
-        </SandpackLayout>
+        <SandpackProvider template={template} files={files} customSetup={customSetup} options={options}>
+          <SandpackLayout style={{ flexDirection: 'column', height: '69vh' }} options={options}>
+            <SandpackPreview style={{ flexGrow: 9 }} />
+            <SandpackConsole style={{ flexGrow: 1 }} />
+          </SandpackLayout>
         </SandpackProvider>
       );
 }

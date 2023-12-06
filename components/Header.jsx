@@ -12,7 +12,7 @@ export default function Header() {
           height={30}
         />
         <h1 className="sm:text-2xl text-xl font-bold tracking-tight">
-          sketch2app
+          sketch-2-app
         </h1>
       </Link>
       <div>

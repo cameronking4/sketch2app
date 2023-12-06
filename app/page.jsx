@@ -13,7 +13,11 @@ import axios from "axios";
 
 const OAI_APIKEY = process.env.OPENAI_API_KEY;
 
-const dependencies = {
+// Prompts for GPT4 Vision Preview API 
+const reactPrompt = 
+`It is your job to generate an App.js page and use inline tailwind styling to replicate the exact image as fully functional as possible.
+- Make use of useState / useEffect or even axios to create a realistic React application. 
+- You may leverage the imports, these are already in the package.json file:
   "react": "latest",
   "react-dom": "latest",
   "axios": "latest", // For making HTTP requests
@@ -23,10 +27,118 @@ const dependencies = {
   "redux-thunk": "latest", // Middleware for Redux asynchronous actions
   "styled-components": "latest", // For CSS in JS
   "react-icons": "latest", // A set of free MIT-licensed high-quality SVG icons
-};
+- But remember to add them as imports at the top of App.js file. 
+- Be helpful by going beyond UI and layout and implement all inferrable functions and use icons. 
+- Make multiple components within file and reference them in App() if you need to.
+DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.`
 
-export const upload = async (persona, base64_img) => {
-  console.log("base64", base64_img);
+const reactNativePrompt = 
+`It is your job to generate an App.js page using React Native to replicate the exact image as a fully functional app.
+- Make use of useState / useEffect or even axios to make this app functional. 
+- Do not put divs in <Text> tags, use <View> tags instead.
+- Be helpful by going beyond UI and layout and implement all inferrable functions and use icons. 
+- Make multiple components within file and reference them in App() if you need to.
+- Adjust the following App.js:
+import React from "react";
+import { StyleSheet, SafeAreaView, Text } from "react-native";
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.h1}>Hello CodeSandbox</Text>
+        <Text style={styles.h2}>
+          Start editing to see some magic happen, even on your mobile device!
+        </Text>
+        <br />
+        <br />
+        <Text style={styles.paragraph}>
+          Open Expo on your mobile device with scanning the QR code in the
+          application log under the start tab.
+        </Text>
+      </SafeAreaView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1",
+    padding: 8,
+  },
+  paragraph: {
+    margin: 8,
+    fontSize: 16,
+    textAlign: "center",
+  },
+  h1: {
+    margin: 28,
+    fontSize: 36,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  h2: {
+    margin: 16,
+    fontSize: 28,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
+
+You may leverage the imports, these are already in the package.json file:
+"expo": "latest", // An open-source platform for making universal native apps
+"react": "latest", // React is a dependency of React Native
+"react-native": "latest", // The React Native framework
+"@react-navigation/native": "latest", // Navigation library for React Native
+"@react-navigation/stack": "latest", // Stack navigator for React Navigation
+"redux": "latest", // For state management
+"react-redux": "latest", // React bindings for Redux
+"redux-thunk": "latest", // Middleware for Redux asynchronous actions
+"axios": "latest", // For making HTTP requests
+"lodash": "latest", // A modern JavaScript utility library delivering modularity, performance, & extras
+"moment": "latest", // Parse, validate, manipulate, and display dates and times in JavaScript
+"@expo/vector-icons": "latest", // Icon library for Expo
+"react-native-gesture-handler": "latest", // Declarative API exposing platform native touch and gesture system to React Native
+"react-native-reanimated": "latest", // React Native's Animated library reimplemented
+"react-native-screens": "latest", // Native navigation components for improved performance
+"react-query": "latest", // Hooks for fetching, caching and updating asynchronous data in React
+"react-native-safe-area-context": "latest", // A flexible way to handle safe area, also works on Android and Web!
+"react-native-svg": "latest", // SVG library for React Native
+"react-native-paper": "latest" // Material Design for React Native (Android & iOS)
+But remember to add them as imports at the top of App.js file.
+DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.
+`
+
+const flutterPrompt = 
+`It is your job to generate a main.dart file to replicate this sketch as best as possible.`
+
+const pythonPrompt = 
+`It is your job to generate an python main.py file. Use streamlit to generate the UI.`
+
+const setPrompt = (prompt) => {
+  return `You are the world renowned Sketch2App tool. Given a sketch, you can generate a full fledged app.
+  ASSIGNMENT:
+  ${prompt}
+  RULES:
+  For your response, only return the lines of code as a string. Do not include any explanation or help text in your response. The response should start with code, no backticks.`
+  ;
+}
+
+//GPT4 Vision Preview API Request
+export const upload = async (vibe, base64_img) => {
+  let prompt = '';
+  if(vibe === 'React') {
+     prompt = setPrompt(reactPrompt);
+  } else if(vibe === 'React Native') {
+     prompt = setPrompt(reactNativePrompt);
+  } else if(vibe === 'Flutter') {
+     prompt = setPrompt(flutterPrompt);
+  } else if(vibe === 'Python') {
+     prompt = setPrompt(pythonPrompt);
+  }
+  console.log(prompt, base64_img);
   const res = await axios.post(
     "https://api.openai.com/v1/chat/completions",
     {
@@ -34,7 +146,7 @@ export const upload = async (persona, base64_img) => {
       messages: [
         {
           role: "system",
-          content: `You are an expert react developer. Create a full fledged protoype using react for the sketch provided. It is your job to generate an app.js page and use inline tailwind styling to replicate the exact image as fully functional as possible (useState / useEffect) for a web application. You may leverage the imports: ${Object.keys(dependencies).join(", ")}. But remember to add them as imports in the App.js file. Be helpful by going beyond UI and layout and implement all inferrable functions and use icons. Make multiple components within file and reference in App() if you have to.`,
+          content: prompt,
         },
         {
           role: "user",
@@ -49,11 +161,11 @@ export const upload = async (persona, base64_img) => {
         },
         {
           role: "user",
-          content: `Please return only the code for App.js! If you have anything outside of code to say, place as a comment at the beginning using //. Your response will be used directly in code for an App.js file.`,
+          content: `Use little comments, and make sure imports are declared. Do not include backticks or explainer text in the response.`,
         },
       
       ],
-      max_tokens: 3000,
+      max_tokens: 4000,
     },
     {
       headers: {
@@ -67,8 +179,8 @@ export const upload = async (persona, base64_img) => {
   return msg;
 };
 
-
-export const reDo = async (textEdits, base64_img) => {
+// GPT4 request to adjust the generated file with user edits
+export const reDo = async (response, textEdits, base64_img) => {
   console.log("base64", base64_img);
   const res = await axios.post(
     "https://api.openai.com/v1/chat/completions",
@@ -77,7 +189,11 @@ export const reDo = async (textEdits, base64_img) => {
       messages: [
         {
           role: "system",
-          content: `You are an expert react developer. Create a full fledged protoype using react for the sketch provided. It is your job to generate an app.js page and use inline tailwind styling to replicate the exact image as fully functional as possible (useState / useEffect) for a web application. Go beyond UI by implementing inferrable functions or icons, helping the user take this several steps forward.`,
+          content: `You are an expert developer. Create a full fledged protoype for the sketch provided. You generated the code submitted and user has revisions. Go beyond UI by implementing inferrable functions or icons, helping the user take this several steps forward. 
+          Adjust the following code:
+          ${response}
+          Your response must always be a string with the lines of code, no explanation or helper text. Do not include backticks or explainer text in the response.
+          DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.`,
         },
         {
           role: "user",
@@ -92,11 +208,11 @@ export const reDo = async (textEdits, base64_img) => {
         },
         {
           role: "user",
-          content: `Edit the following App.js. I want to: ${textEdits}. Your response will be used directly in code for this App.js file.`,
+          content: `Edit the following file. I want to: ${textEdits}. Your response should not include backticks or synax formatting.`,
         },
       
       ],
-      max_tokens: 2500,
+      max_tokens: 3500,
     },
     {
       headers: {
@@ -110,6 +226,7 @@ export const reDo = async (textEdits, base64_img) => {
   return msg;
 };
 
+// UI
 export default function Page() {
     const [img, setImg] = useState(null);
     const webcamRef = useRef();
@@ -134,23 +251,24 @@ export default function Page() {
         const response = await upload(vibe, img);
         toast.success("Success!")
         setResponse(response);
+        console.log(response);
     }
 
-    const regenerate = async (textEdits) => {
+    const regenerate = async() => {
         isRegenerating(true);
-        if(textEdits.length > 10) {
-          const response = await reDo(textEdits, img);
-          setResponse(response);
+        if(responseText.length > 7) {
+          const newResponse = await reDo(response, responseText, img);
+          setResponse(newResponse);
         } else {
-          const response = await upload(vibe, img);
-          setResponse(response);
+          const newResponse = await upload(vibe, img);
+          setResponse(newResponse);
         }
-        toast.success("Regenerated");
+        toast.success("Regenerated!");
         isRegenerating(false);
     }
 
     const regenerateContent = async () => {
-        await regenerate(responseText);
+        await regenerate();
     };
 
     return (
@@ -170,43 +288,42 @@ export default function Page() {
               {response ? (
                   <div className='w-full'>
                       <br />
-                      <Sandbox Appjs={response} />
-                      <br />
-                      <div className="container mx-auto my-8 p-5 border-2 border-gray-200 rounded-lg shadow-md">
-                          <h3>Regenerate App</h3>
+                      <Sandbox mainFile={response} framework={vibe}/>
+                      {regenerating ?
+                        <button
+                            className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-2 mt-2 hover:bg-black/80 w-full"
+                            disabled
+                        >
+                            <span className="loading">
+                                <span style={{ backgroundColor: 'white' }} />
+                                <span style={{ backgroundColor: 'white' }} />
+                                <span style={{ backgroundColor: 'white' }} />
+                            </span>
+                        </button>
+                        :
+                        <button
+                            onClick={regenerateContent}
+                            className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
+                        >
+                          {responseText.length > 10 ? "Regenerate with text edits" : "Regenerate"}
+                        </button>
+                      }
+                      <div className="container mx-auto my-8 m-2 p-5 border-2 border-gray-200 rounded-lg shadow-md">
+                          <h3>Tweak App</h3>
                           <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4">
                               <div className="w-full">
                                   <label htmlFor="responseTextArea" className="block text-sm font-medium text-gray-700">
-                                      (Optional) Add an additional prompt here to edit app: 
+                                      (Optional) Add an additional text prompt here to edit app: 
                                   </label>
                                   <div className='flex auto'>
                                       <textarea
                                           id="responseTextArea"
-                                          rows="1"
+                                          rows="2"
                                           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
                                           value={responseText}
                                           onChange={(e) => setResponseText(e.target.value)}
                                       />
                                   </div>
-                                  {regenerating ?
-                                      <button
-                                          className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-2 mt-2 hover:bg-black/80 w-full"
-                                          disabled
-                                      >
-                                          <span className="loading">
-                                              <span style={{ backgroundColor: 'white' }} />
-                                              <span style={{ backgroundColor: 'white' }} />
-                                              <span style={{ backgroundColor: 'white' }} />
-                                          </span>
-                                      </button>
-                                      :
-                                      <button
-                                          onClick={regenerateContent}
-                                          className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-                                      >
-                                        {responseText.length > 10 ? "Regenerate with text edits" : "Try again using sketch"};
-                                      </button>
-                                  }
                               </div>
                           </div>
                       </div>

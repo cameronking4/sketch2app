@@ -10,7 +10,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-let vibes = ["React", "Python", "React Native", "Flutter"];
+let vibes = ["React", "React Native", "Flutter"];
 
 export default function DropDown({ vibe, setVibe }) {
   return (

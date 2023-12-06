@@ -1,22 +1,9 @@
-import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview} from "@codesandbox/sandpack-react";
+import { SandpackProvider, SandpackLayout, SandpackConsole, SandpackConsumer, SandpackPreview} from "@codesandbox/sandpack-react";
 
-export default function Sandbox({ Appjs }) {
+export default function Sandbox({ mainFile, framework }) {
 
-      function extractAppJsCode(fullString) {
-        const appJsStart = fullString.indexOf("import React");
-        const appJsEnd = fullString.indexOf("export default App;") + "export default App;".length;
-      
-        if (appJsStart === -1 || appJsEnd === -1) {
-          return "App.js code not found in the provided string.";
-        }
-      
-        return fullString.substring(appJsStart, appJsEnd);
-      }
-
-      const response = extractAppJsCode(Appjs);
-
-      const files = {
-        "/App.js": response,
+      const reactFiles = {
+        "/App.js": mainFile,
         "/index.js": {
           code: `import React from "react";
       import ReactDOM from "react-dom";
@@ -44,7 +31,6 @@ export default function Sandbox({ Appjs }) {
         plugins: [],
       };`
         },
-        // Assuming you have a basic HTML file
         "/public/index.html": {
           code: `
       <!DOCTYPE html>
@@ -62,7 +48,10 @@ export default function Sandbox({ Appjs }) {
         }
       };
       
-      const customSetup = {
+      const reactSetup = {
+        env: {
+          NODE_ENV: 'development'
+        },      
         dependencies: {
           "react": "latest",
           "react-dom": "latest",
@@ -84,44 +73,122 @@ export default function Sandbox({ Appjs }) {
           "react-helmet": "latest" // A document head manager for React
         }
       };
-      
-      // Ensure that external resources are properly included in the Sandpack environment
+
       const options = {
         externalResources: [
           'https://unpkg.com/@tailwindcss/ui/dist/tailwind-ui.min.css',
         ]
       };
+
+      const rnSetup = {
+        env: {
+          NODE_ENV: 'development' 
+        },
+        dependencies: {
+          "expo": "latest", // An open-source platform for making universal native apps
+          "react": "latest", // React is a dependency of React Native
+          "react-native": "latest", // The React Native framework
+          "@react-navigation/native": "latest", // Navigation library for React Native
+          "@react-navigation/stack": "latest", // Stack navigator for React Navigation
+          "redux": "latest", // For state management
+          "react-redux": "latest", // React bindings for Redux
+          "redux-thunk": "latest", // Middleware for Redux asynchronous actions
+          "axios": "latest", // For making HTTP requests
+          "lodash": "latest", // A modern JavaScript utility library delivering modularity, performance, & extras
+          "moment": "latest", // Parse, validate, manipulate, and display dates and times in JavaScript
+          "@expo/vector-icons": "latest", // Icon library for Expo
+          "react-native-gesture-handler": "latest", // Declarative API exposing platform native touch and gesture system to React Native
+          "react-native-reanimated": "latest", // React Native's Animated library reimplemented
+          "react-native-screens": "latest", // Native navigation components for improved performance
+          "react-query": "latest", // Hooks for fetching, caching and updating asynchronous data in React
+          "react-native-safe-area-context": "latest", // A flexible way to handle safe area, also works on Android and Web!
+          "react-native-svg": "latest", // SVG library for React Native
+          "react-native-paper": "latest" // Material Design for React Native (Android & iOS)
+        }
+      };
+
+      const rnFiles = {
+        "/App.js": mainFile,
+        "/package.json": {
+          code: `{
+            "name": "react-native-expo",
+            "version": "1.0.0",
+            "main": "node_modules/expo/AppEntry.js",
+            "scripts": {
+              "start": "npm start",
+              "android": "expo start --android",
+              "ios": "expo start --ios",
+              "web": "expo start --web"
+            },
+            "dependencies": {
+              "@expo/cli": "^0.10.14",
+              "expo": "~49.0.16",
+              "expo-status-bar": "~1.7.1",
+              "react": "18.2.0",
+              "react-native": "0.72.6",
+              "react-native-web": "~0.19.9",
+              "react-dom": "18.2.0"
+            },
+            "devDependencies": {
+              "@babel/core": "^7.23.2",
+              "body-parser": "^1.18.3",
+              "express": "^4.16.3",
+              "http-proxy-middleware": "^2.0.6",
+              "qs": "^6.11.2",
+              "xdl": "^60.0.12"
+            },
+            "private": true
+          }
+          `,
+        },
+        "/app.json": {
+          code:`
+        {
+          "expo": {
+            "name": "React Native with Expo on CodeSandbox",
+            "slug": "react-native-codesandbox",
+            "version": "1.0.0",
+            "orientation": "portrait",
+            "icon": "./assets/icon.png",
+            "userInterfaceStyle": "light",
+            "splash": {
+              "image": "./assets/splash.png",
+              "resizeMode": "contain",
+              "backgroundColor": "#ffffff"
+            },
+            "assetBundlePatterns": ["**/*"],
+            "ios": {
+              "supportsTablet": true
+            },
+            "android": {
+              "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+              }
+            },
+            "web": {
+              "bundler": "metro",
+              "favicon": "./assets/favicon.png"
+            }
+          }
+        }        
+        `},
+        "/babel.config.js": {code: 
+        `module.exports = function(api) {
+          api.cache(true);
+          return {
+            presets: ['babel-preset-expo'],
+          };
+        };`
+        }
+      }
+      const files = framework === "React" ? reactFiles : null || framework === "React Native" ? rnFiles : null;
       return (
-        <SandpackProvider template="react" files={files} customSetup={customSetup} options={options}>
-          <SandpackLayout options={options}>
-          <SandpackPreview style={{ height: '60vh' }} />
-          </SandpackLayout>
+        <SandpackProvider template={ framework === "React" || framework === "React Native" ?  "react" : null} files={files} customSetup={ framework === "React" ? reactSetup : framework === "React Native" ? rnSetup : null} options={framework === "React" ? options : null}>
+        <SandpackLayout style={{ flexDirection: 'column', height: '85vh' }} options={options}>
+        <SandpackPreview style={{ flexGrow: 9 }} />
+        <SandpackConsole style={{ flexGrow: 1 }} />
+        </SandpackLayout>
         </SandpackProvider>
-        
       );
 }
-
-
-          {/* <Sandpack
-          height="700"
-          className="px-10"
-          customSetup={{ 
-            dependencies: { 
-              "react-markdown": "latest",
-              "tailwindcss": "latest",
-            }
-          }}
-          files={{
-            '/App.js': `${extractCodeFromString(response)}`,
-          }}
-          options={{
-            externalResources: [
-              'https://unpkg.com/@tailwindcss/ui/dist/tailwind-ui.min.css',
-            ],
-            showNavigator: true,
-            showTabs: true,
-            editorHeight:750,
-              layout: "preview", // preview | tests | console
-          }}
-          template="react"
-        /> */}

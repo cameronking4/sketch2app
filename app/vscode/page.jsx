@@ -19,6 +19,7 @@ export default function Page() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
   const vibe = searchParams.get('type');
+  const fileName = searchParams.get('adhoc');
   const folderPath = searchParams.get('folder');
   const OAI_APIKEY = process.env.OPENAI_API_KEY;  
   const CLOUDINARY_APISECRET = process.env.NEXT_PUBLIC_CLOUDINARY_APISECRET;
@@ -67,7 +68,9 @@ export default function Page() {
     let data = JSON.stringify({
       "image": img,
       "openai_key": OAI_APIKEY,
-      "uuid": sessionId
+      "uuid": sessionId,
+      "type": string,
+      "adhoc": fileName,
     });
 
     try {

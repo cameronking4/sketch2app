@@ -37,29 +37,9 @@ const reactNativePrompt =
 - Do not put divs in <Text> tags, use <View> tags instead.
 - Be helpful by going beyond UI and layout and implement all inferrable functions and use icons. 
 - Make multiple components within file and reference them in App() if you need to.
-- Adjust the following App.js:
+- include styling in App.js, for example:
 import React from "react";
 import { StyleSheet, SafeAreaView, Text } from "react-native";
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.h1}>Hello CodeSandbox</Text>
-        <Text style={styles.h2}>
-          Start editing to see some magic happen, even on your mobile device!
-        </Text>
-        <br />
-        <br />
-        <Text style={styles.paragraph}>
-          Open Expo on your mobile device with scanning the QR code in the
-          application log under the start tab.
-        </Text>
-      </SafeAreaView>
-    );
-  }
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -90,14 +70,8 @@ You may leverage the imports, these are already in the package.json file:
 "expo": "latest", // An open-source platform for making universal native apps
 "react": "latest", // React is a dependency of React Native
 "react-native": "latest", // The React Native framework
-"@react-navigation/native": "latest", // Navigation library for React Native
-"@react-navigation/stack": "latest", // Stack navigator for React Navigation
 "redux": "latest", // For state management
-"react-redux": "latest", // React bindings for Redux
-"redux-thunk": "latest", // Middleware for Redux asynchronous actions
 "axios": "latest", // For making HTTP requests
-"lodash": "latest", // A modern JavaScript utility library delivering modularity, performance, & extras
-"moment": "latest", // Parse, validate, manipulate, and display dates and times in JavaScript
 "@expo/vector-icons": "latest", // Icon library for Expo
 "react-native-gesture-handler": "latest", // Declarative API exposing platform native touch and gesture system to React Native
 "react-native-reanimated": "latest", // React Native's Animated library reimplemented
@@ -106,6 +80,7 @@ You may leverage the imports, these are already in the package.json file:
 "react-native-safe-area-context": "latest", // A flexible way to handle safe area, also works on Android and Web!
 "react-native-svg": "latest", // SVG library for React Native
 "react-native-paper": "latest" // Material Design for React Native (Android & iOS)
+"react-native-vector-icons": "latest"
 But remember to add them as imports at the top of App.js file.
 DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.
 `

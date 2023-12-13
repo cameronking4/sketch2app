@@ -16,7 +16,21 @@ export default function Header() {
         </h1>
       </Link>
       <div>
-        Powered by{' '}gpt4-vision-preview
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Link href="/about">
+            <h1 className="sm:text-base text-sm">How it works</h1>
+          </Link>
+          <Link href="/examples">
+            <h1 className="sm:text-base text-sm ml-5">
+              Examples
+            </h1>
+          </Link>
+          <Link href="/pricing">
+            <h1 className="sm:text-base text-sm ml-5">
+              Pricing
+            </h1>
+          </Link>
+          </div>
       </div>
       {/* <a
         href="https://vercel.com/templates/next.js/twitter-bio"

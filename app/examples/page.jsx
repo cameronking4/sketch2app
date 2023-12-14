@@ -38,14 +38,14 @@ const Card = ({ title, index, description, imageUrl }) => (
     <h3 className="text-xl font-semibold mt-3">{title}</h3>
     <p>{description}</p>
     <div className="mt-2">
-      <select className="border rounded-md p-2 w-full">
+      {/* <select className="border rounded-md p-2 w-full">
         {options.map(option => <option key={option} value={option}>{option}</option>)}
-      </select>
+      </select> */}
     </div>
     <Link href={'/?example=' + index} >
     <button
     className="bg-black text-white rounded-md px-4 py-2 mt-4 w-full hover:bg-slate-600">
-      Generate
+      Generate this sketch &rarr;
     </button>
     </Link>
   </div>

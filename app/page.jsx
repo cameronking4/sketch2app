@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation'
 import Image from 'next/image';
 import { useRef, useState, useCallback } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
@@ -10,7 +11,9 @@ import Header from '../components/Header';
 import ConfettiExplosion from 'confetti-explosion-react';
 import Webcam from "react-webcam";
 import axios from "axios";
+import { useEffect } from 'react';
 
+// Replace your OpenAI API key with ENV variable
 const OAI_APIKEY = process.env.OPENAI_API_KEY;
 
 // Prompts for GPT4 Vision Preview API 
@@ -94,7 +97,7 @@ const setPrompt = (prompt) => {
   ;
 }
 
-//GPT4 Vision Preview API Request
+//GPT4 Vision Preview API request to generate code
 export const upload = async (vibe, base64_img) => {
   let prompt = '';
   if(vibe === 'React') {
@@ -190,6 +193,20 @@ export const reDo = async (response, textEdits, base64_img) => {
   return msg;
 };
 
+// Confetti config for result 
+const confetti = {
+  force: 0.65,
+  duration: 4500,
+  particleCount: 250,
+  height: 1600,
+  width: 1600
+}
+
+//Create store for examples. Simple array -> index maps to example image
+const ExampleImages =["https://github.com/cameronking4/sketch2app/blob/main/public/example1.png?raw=true",
+  "https://github.com/cameronking4/sketch2app/blob/main/public/example2.png?raw=true",
+  "https://github.com/cameronking4/sketch2app/blob/main/public/example3.png?raw=true"];
+
 // UI
 export default function Page() {
     const [img, setImg] = useState(null);
@@ -200,6 +217,18 @@ export default function Page() {
     const [response, setResponse] = useState(null);
     const [responseText, setResponseText] = useState('');
 
+    //query params for example sketches
+    const searchParams = useSearchParams();
+    const example = searchParams.get('example');
+    console.log("Query param detected! User wants to start with an example sketch: ", example);
+
+    useEffect(() => {
+      if(ExampleImages[example]){
+        setImg(ExampleImages[example]);
+      }
+    }, [example]);
+   
+    // handle capture button
     const capture = useCallback(async () => {
       const imageSrc = webcamRef?.current.getScreenshot();
       if (imageSrc) {
@@ -208,8 +237,9 @@ export default function Page() {
         // Handle the case where the screenshot couldn't be captured
         console.error("Failed to capture screenshot from webcam");
       }
-  }, [webcamRef]);
+    }, [webcamRef]);
 
+    // handle Generate button
     const sendUpload = async () => {
         isGenerating(true);
         const response = await upload(vibe, img);
@@ -218,6 +248,7 @@ export default function Page() {
         console.log(response);
     }
 
+    // handle Regenerate button
     const regenerate = async() => {
         isRegenerating(true);
         if(responseText.length > 7) {
@@ -236,15 +267,7 @@ export default function Page() {
         await regenerate();
     };
 
-    const confetti = {
-        force: 0.65,
-        duration: 4500,
-        particleCount: 250,
-        height: 1600,
-        width: 1600
-      }
-
-
+    // Finally, render the UI
     return (
       <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen overflow-hidden">
         { response && <ConfettiExplosion {...confetti} style={{overflow: 'hidden'}}/> }

@@ -6,10 +6,12 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
-
+import { useState } from 'react';
 
 // UI
 export default function Page() {
+
+  const [showBanner, setShowBanner] = useState(true);
 
   const opts = {
     height: '400',
@@ -44,10 +46,10 @@ export default function Page() {
     
     return (
       <>
-        
       <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen overflow-hidden">
         <Header/>
         <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:before:flex-1">
+       { showBanner && <>
       <div
         className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
         aria-hidden="true"
@@ -78,7 +80,7 @@ export default function Page() {
           <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true">
             <circle cx={1} cy={1} r={1} />
           </svg>
-          Launch the web app from Visual Studio Code and inject code directly into your editor!
+          Work directly in Visual Studio Code and inject code from sketches!
         </p>
         <a
           href="https://marketplace.visualstudio.com/items?itemName=Sketch2App.sketch2app"
@@ -88,11 +90,12 @@ export default function Page() {
         </a>
       </div>
       <div className="flex flex-1 justify-end">
-        <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]">
+        <button type="button"  onClick={() => {setShowBanner(false)}} className="-m-3 p-3 focus-visible:outline-offset-[-4px]">
           <span className="sr-only">Dismiss</span>
           <XMarkIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
         </button>
-      </div>
+      </div> 
+      </> }
     </div>   
         <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4">
         <div className="bg-white sm:py-12">

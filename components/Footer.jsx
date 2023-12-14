@@ -32,7 +32,7 @@ export default function Footer() {
       <div className="flex space-x-4 items-center">
         <Link href="https://marketplace.visualstudio.com/items?itemName=Sketch2App.sketch2app" target='blank' className="group">
           <div className="flex items-center space-x-2">
-          <h1 className="h-6 w-full fill-slate-500 group-hover:fill-slate-700" style={{color:'gray'}}>
+          <h1 className="h-6 w-full fill-slate-500 group-hover:fill-slate-700">
             Install VS Code Extension
           </h1>
           <div className='w-6 h-6 mt-2'>

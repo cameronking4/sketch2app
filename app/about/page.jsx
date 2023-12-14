@@ -48,7 +48,7 @@ export default function Page() {
       <>
       <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen overflow-hidden">
         <Header/>
-        <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:before:flex-1">
+        <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-slate-50 px-6 py-2.5 sm:before:flex-1">
        { showBanner && <>
       <div
         className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
@@ -75,16 +75,16 @@ export default function Page() {
         />
       </div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <p className="text-sm leading-6 text-gray-900">
+        <p className="text-sm leading-6 text-slate-900">
           <strong className="font-semibold">Install the VS Code extension</strong>
           <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true">
             <circle cx={1} cy={1} r={1} />
           </svg>
-          Work directly in Visual Studio Code and inject code from sketches!
+          Work directly in Visual Studio Code and automatically inject code from the web app!
         </p>
         <a
           href="https://marketplace.visualstudio.com/items?itemName=Sketch2App.sketch2app"
-          className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+          className="flex-none rounded-full bg-slate-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
         >
           Install now <span aria-hidden="true">&rarr;</span>
         </a>
@@ -92,7 +92,7 @@ export default function Page() {
       <div className="flex flex-1 justify-end">
         <button type="button"  onClick={() => {setShowBanner(false)}} className="-m-3 p-3 focus-visible:outline-offset-[-4px]">
           <span className="sr-only">Dismiss</span>
-          <XMarkIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
+          <XMarkIcon className="h-5 w-5 text-slate-900" aria-hidden="true" />
         </button>
       </div> 
       </> }
@@ -102,7 +102,7 @@ export default function Page() {
         <div className="mx-auto max-w-8xl px-6 lg:px-2">
         <div className="w-full lg:text-center">
           {/* <h2 className="text-base font-semibold leading-7 text-slate-600">How it works</h2> */}
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
           Made for rapid prototypers
           </p>
           <div className="mx-auto max-w-2xl lg:max-w-4xl">
@@ -121,7 +121,7 @@ export default function Page() {
           <dl className="grid max-w-xl grid-cols-1 gap-x-3 gap-y-3 lg:max-w-none mt-8 lg:grid-cols-3 lg:gap-y-3">
             {features.map((feature) => (
               <div key={feature.name} className="relative">
-                <dt className="text-base font-semibold leading-7 text-gray-600">
+                <dt className="text-base font-semibold leading-7 text-slate-600">
                   {/* <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                     <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
                   </div> */}

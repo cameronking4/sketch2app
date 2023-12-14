@@ -195,9 +195,10 @@ export default function Page() {
           <>
             <img className='mt-2' width="100%" height="100%" src={img} alt="screenshot" />
             <br/>
-            <div className="block">
+            {/* ToDo: Add a button to retake the sketch */}
+            {/* <div className="block">
               <button> Retake sketch </button>
-            </div>
+            </div> */}
             <div className="flex mb-5 items-center space-x-3">
             </div>
           </>

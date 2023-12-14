@@ -26,7 +26,7 @@ export const reactNativePrompt =
 - Do not put divs in <Text> tags, use <View> tags instead.
 - Be helpful by going beyond UI and layout and implement all inferrable functions and use icons. 
 - Make multiple components within file and reference them in App() if you need to.
-- include styling in App.js using tailwind-rn or custom stylesheets. When using tailwind, use double quotes for class names : <View style={tailwind("h-full")}>
+- Include styling in App.js 
 
 IMPORTS AT THE TOP ARE CRUCIAL.
 You may leverage the following imports, as they are already in your package.json file:
@@ -37,12 +37,70 @@ You may leverage the following imports, as they are already in your package.json
 "react-native-vector-icons": "latest", // For icons, do not use @expo/vector-icons.
 
 When using the MaterialCommunityIcons and others import like this: react-native-vector-icons/MaterialCommunityIcons. 
-In fact, you can copy this perfect example below.
+In fact, you can just modify the contents of this perfect example below.
 
 import React, { Component } from "react";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
-import tailwind from "tailwind-rn";
-import { MaterialCommunityIcons } from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+class App extends Component {
+  render() {
+    return (
+      <View>
+        <View style={styles.header}>
+          <Image
+            accessibilityLabel="React logo"
+            source={{ uri: logoUri }}
+            resizeMode="contain"
+            style={styles.logo}
+          />
+          <Text style={styles.title}>React Native for Web</Text>
+        </View>
+        <Text style={styles.text}>
+          To get started, edit{" "}
+          <Link href="https://codesandbox.io/s/q4qymyp2l6/" style={styles.code}>
+            src/App.js
+          </Link>
+          .
+        </Text>
+        <Button onPress={() => {}} title="Example button" />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  app: {
+    marginHorizontal: "auto",
+    maxWidth: 500,
+  },
+  logo: {
+    height: 80,
+  },
+  header: {
+    padding: 20,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: "1.5rem",
+    marginVertical: "1em",
+    textAlign: "center",
+  },
+  text: {
+    lineHeight: "1.5em",
+    fontSize: "1.125rem",
+    marginVertical: "1em",
+    textAlign: "center",
+  },
+  link: {
+    color: "#1B95E0",
+  },
+  code: {
+    fontFamily: "monospace, monospace",
+  },
+});
+
+export default App;
 
 Also remember imports like SafeAreaView, Text, View, StyleSheet, etc.
 DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.

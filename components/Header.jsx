@@ -26,7 +26,7 @@ export default function Header() {
             </h1>
           </Link>
           <Link href="/pricing">
-            <h1 className="sm:text-base text-sm ml-5">
+            <h1 className="sm:text-base text-sm ml-5 mr-3">
               Pricing
             </h1>
           </Link>

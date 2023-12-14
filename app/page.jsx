@@ -196,7 +196,7 @@ export default function Page() {
                             <>
                                 <Popover className="relative">
                                     <Popover.Button className="inline-flex items-center gap-x-1 text-md mt-6 leading-6 text-gray-900">
-                                        <span>Capture sketch using Webcam</span>
+                                        <span>Capture sketch using webcam</span>
                                         <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
                                     </Popover.Button>
                                     <Transition
@@ -252,10 +252,12 @@ export default function Page() {
                                       }}
                                   />
                                   <center>
-                                  <div className="mt-2 items-center space-x-3">
+                                <button onClick={handleSwitchCam}>
+                                  <div className="mt-2 items-center justify-center flex">
                                     <CameraIcon className="h-6 w-6 items-center text-gray-600" aria-hidden="true" />
-                                    <button onClick={handleSwitchCam} className='items-center'>Switch camera</button>
+                                    <p className='ml-1'>flip camera</p>
                                   </div>
+                                  </button>
                                 </center>
                             </>
                           ) : (

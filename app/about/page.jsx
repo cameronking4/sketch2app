@@ -107,8 +107,8 @@ export default function Page() {
           </p>
           <div className="mx-auto max-w-2xl lg:max-w-4xl">
           <center>
-        <p className="m-4 px-24 text-lg text-slate-600">
-          Not another low code tool - we're a PRO-code dev tool. Bring your idea to life using the code you already use!
+        <p className="m-4 mx-16 text-lg text-slate-600">
+          We're a PRO-Dev tool, not another low code tool. Generate code to your exact UI requirements in less than 30 seconds, using the frameworks you already know. Less time searching for templates or codepens!
         </p>
         </center>
         </div>

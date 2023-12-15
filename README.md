@@ -1,4 +1,7 @@
 # [Sketch-2-App](https://www.sketch2app.io/)
+<a href="https://www.futurepedia.io/tool/sketch2app?utm_source=sketch2app_embed" style="width: 250px; height: 54px;" width="250" height="54">
+        <img src="https://www.futurepedia.io/api/image-widget?toolId=90af35d4-bb76-4223-ad12-c4ed4b2a0499" alt="Sketch2App | Featured on Futurepedia" style="width: 250px; height: 54px;" width="250" height="54">
+        </a>
 
 ## Use GPT4v to generate web app code (CRA + Tailwind)
 Use React to generate a web app with Tailwind CSS or React Native for a mobile app prototype. It will generate code and a sandbox to preview the app within seconds of capturing your wireframe/sketch

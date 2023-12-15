@@ -1,8 +1,9 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import { useState, useEffect } from "react";
-
 
 export default function Header() {
   const [showBanner, setShowBanner] = useState(true);

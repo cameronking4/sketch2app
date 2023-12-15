@@ -2,7 +2,8 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col sm:flex-row justify-between items-center w-full border-t mt-5 mb-2 px-3 py-4 sm:py-2">
+    <footer className="flex flex-col sm:flex-row justify-between align-center items-center w-full border-t mt-5 mb-2 px-3 py-4 sm:py-2">
+     <p>Copyright 2023 | All Rights Reserved</p>
       <div className="flex space-x-4 items-center">
         <Link
           href="https://linkedin.com/in/cameronyking"
@@ -29,8 +30,8 @@ export default function Footer() {
           </svg>
         </Link>
       </div>
-      <div className="flex space-x-4 items-center">
-        <Link href="https://marketplace.visualstudio.com/items?itemName=Sketch2App.sketch2app" target='blank' className="group">
+  
+        {/* <Link href="https://marketplace.visualstudio.com/items?itemName=Sketch2App.sketch2app" target='blank' className="group">
           <div className="flex items-center space-x-2">
           <h1 className="h-6 w-full fill-slate-500 group-hover:fill-slate-700">
             Install VS Code Extension
@@ -39,8 +40,15 @@ export default function Footer() {
             <img src='https://media4.giphy.com/media/SS8CV2rQdlYNLtBCiF/giphy.gif?cid=ecf05e47kvjh7dofa849yjvx9gowa0088yl0ilulog8aw3yv&ep=v1_gifs_search&rid=giphy.gif&ct=g'/>
           </div>
           </div>
-        </Link>
-      </div>
+        </Link> */}
+          <div className="m-4 h-12 items-center justify-center align-center">
+            <a href="https://www.futurepedia.io/tool/sketch2app?utm_source=sketch2app_embed">
+              <div className="w-full h-full flex justify-center items-center">
+                <img src="https://www.futurepedia.io/api/image-widget?toolId=90af35d4-bb76-4223-ad12-c4ed4b2a0499" alt="Sketch2App | Featured on Futurepedia" className="max-w-full max-h-full object-contain"/>
+              </div>
+            </a>
+          </div>
+      
     </footer>
   );
 }

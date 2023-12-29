@@ -44,7 +44,7 @@ export default function Footer() {
           <div className="m-4 h-12 items-center justify-center align-center">
             <a href="https://www.futurepedia.io/tool/sketch2app?utm_source=sketch2app_embed">
               <div className="w-full h-full flex justify-center items-center">
-                <img src="https://www.futurepedia.io/api/embed?toolId=90af35d4-bb76-4223-ad12-c4ed4b2a0499" alt="Sketch2App | Featured on Futurepedia" className="max-w-full max-h-full object-contain"/>
+                <img src="https://www.futurepedia.io/api/image-widget?toolId=90af35d4-bb76-4223-ad12-c4ed4b2a0499" alt="Sketch2App | Featured on Futurepedia" className="max-w-full max-h-full object-contain"/>
               </div>
             </a>
           </div>

@@ -107,107 +107,107 @@ DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BA
 `
 
 export const setPrompt = (prompt) => {
-    return `You are the world renowned Sketch2App tool. Given a sketch, you can generate a full fledged app.
-    ASSIGNMENT:
-    ${prompt}
-    RULES:
-    For your response, only return the lines of code as a string. Do not include any explanation or help text in your response. The response should start with code, no backticks.`
-    ;
+  return `You are the world renowned Sketch2App tool. Given a sketch, you can generate a full fledged app.
+  ASSIGNMENT:
+  ${prompt}
+  RULES:
+  For your response, only return the lines of code as a string. Do not include any explanation or help text in your response. The response should start with code, no backticks.`
+  ;
+}
+  
+//GPT4 Vision Preview API request to generate code
+export const upload = async (apikey, vibe, base64_img) => {
+  let prompt = '';
+  if(vibe === 'React') {
+      prompt = setPrompt(reactPrompt);
+  } else if(vibe === 'React Native') {
+      prompt = setPrompt(reactNativePrompt);
   }
-  
-  //GPT4 Vision Preview API request to generate code
-  export const upload = async (vibe, base64_img) => {
-    let prompt = '';
-    if(vibe === 'React') {
-       prompt = setPrompt(reactPrompt);
-    } else if(vibe === 'React Native') {
-       prompt = setPrompt(reactNativePrompt);
+
+  const res = await axios.post(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      model: "gpt-4-vision-preview",
+      messages: [
+        {
+          role: "system",
+          content: prompt,
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "image_url",
+              image_url: {
+                url: base64_img,
+              },
+            },
+          ],
+        },
+        {
+          role: "user",
+          content: `Use little comments, and make sure imports are declared. Do not include backticks or explainer text in the response.`,
+        },
+      
+      ],
+      max_tokens: 4000,
+      temperature: 0.01,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apikey || OAI_APIKEY}`,
+      },
     }
-  
-    const res = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4-vision-preview",
-        messages: [
-          {
-            role: "system",
-            content: prompt,
-          },
-          {
-            role: "user",
-            content: [
-              {
-                type: "image_url",
-                image_url: {
-                  url: base64_img,
-                },
-              },
-            ],
-          },
-          {
-            role: "user",
-            content: `Use little comments, and make sure imports are declared. Do not include backticks or explainer text in the response.`,
-          },
-        
-        ],
-        max_tokens: 4000,
-        temperature: 0.01,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${OAI_APIKEY}`,
+  );
+  let msg = res.data.choices[0].message.content;
+  console.log(res.data);
+  return msg;
+};
+
+// GPT4 request to adjust the generated code with user edits
+export const reDo = async (apikey, response, textEdits, base64_img) => {
+  console.log("base64", base64_img);
+  const res = await axios.post(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      model: "gpt-4-vision-preview",
+      messages: [
+        {
+          role: "system",
+          content: `You are an expert developer. Create a full fledged protoype for the sketch provided. You generated the code submitted and our user has revisions. Try to go beyond UI by implementing functions, adding modals alerts, navigation and icons. 
+          Adjust the following code:
+          ${response}
+          Your response must always be a string with the lines of code, no explanation or helper text. Do not include backticks or explainer text in the response.
+          DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.`,
         },
-      }
-    );
-    let msg = res.data.choices[0].message.content;
-    console.log(res.data);
-    return msg;
-  };
-  
-  // GPT4 request to adjust the generated code with user edits
-  export const reDo = async (response, textEdits, base64_img) => {
-    console.log("base64", base64_img);
-    const res = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4-vision-preview",
-        messages: [
-          {
-            role: "system",
-            content: `You are an expert developer. Create a full fledged protoype for the sketch provided. You generated the code submitted and our user has revisions. Try to go beyond UI by implementing functions, adding modals alerts, navigation and icons. 
-            Adjust the following code:
-            ${response}
-            Your response must always be a string with the lines of code, no explanation or helper text. Do not include backticks or explainer text in the response.
-            DO NOT GIVE AN EXPLANATION, HELP TEXT OR ANYTHING. JUST THE LINES OF CODE. NO BACKTICKS OR SYNTAX FORMATTING.`,
-          },
-          {
-            role: "user",
-            content: [
-              {
-                type: "image_url",
-                image_url: {
-                  url: base64_img,
-                },
+        {
+          role: "user",
+          content: [
+            {
+              type: "image_url",
+              image_url: {
+                url: base64_img,
               },
-            ],
-          },
-          {
-            role: "user",
-            content: `Edit the following file. I want to: ${textEdits}. Your response should not include backticks or synax formatting. Ensure you import all dependencies and add them to the top of the file.`,
-          },
-        
-        ],
-        max_tokens: 3500,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${OAI_APIKEY}`,
+            },
+          ],
         },
-      }
-    );
-    let msg = res.data.choices[0].message.content;
-    console.log(res.data);
-    return msg;
-  };
+        {
+          role: "user",
+          content: `Edit the following file. I want to: ${textEdits}. Your response should not include backticks or synax formatting. Ensure you import all dependencies and add them to the top of the file.`,
+        },
+      
+      ],
+      max_tokens: 3500,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apikey || OAI_APIKEY}`,
+      },
+    }
+  );
+  let msg = res.data.choices[0].message.content;
+  console.log(res.data);
+  return msg;
+};

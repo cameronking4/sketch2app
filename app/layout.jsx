@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
-import { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
+import Footer from '../components/Footer';
 import '../styles/globals.css';
 
 const title = 'Sketch2App';
@@ -26,7 +27,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+          {children}
+          <Footer />
+        </div>
+        <Toaster
+          position="top-center"
+          reverseOrder={true}
+          toastOptions={{ duration: 10000 }}
+        />
         <Analytics />
       </body>
     </html>

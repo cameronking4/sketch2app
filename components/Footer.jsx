@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="flex flex-col sm:flex-row justify-between align-center items-center w-full border-t mt-5 mb-2 px-3 py-4 sm:py-2">
-     <p>Copyright 2023 | All Rights Reserved</p>
+     <p>{`Copyright ${new Date().getFullYear()} | All Rights Reserved`}</p>
       <div className="flex space-x-4 items-center">
         <Link
           href="https://linkedin.com/in/cameronyking"

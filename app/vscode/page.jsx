@@ -1,11 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useRef, useState, useCallback } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import DropDown from '../../components/DropDown';
-import Footer from '../../components/Footer';
-import Header from '../../components/VSHeader';
 import Webcam from "react-webcam";
 import axios from "axios";
 import { useSearchParams } from 'next/navigation'
@@ -140,18 +137,9 @@ export default function Page() {
   }
 
   return (
-    <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
-      <div>
-      <Toaster
-          position="top-center"
-          reverseOrder={true}
-          toastOptions={{ duration: 10000 }}
-        />
-      </div>
-      <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
+    <div className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
       <h2 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-         {complete ? `Voila! Try your ${vibe} code` : 'Capture your sketch to generate code'}
+          {complete ? `Voila! Try your ${vibe} code` : 'Capture your sketch to generate code'}
       </h2>
       { response ?
         <div className='w-full'>
@@ -159,22 +147,22 @@ export default function Page() {
             className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
             disabled
           >
-          <span className="loading">
-            <span style={{ backgroundColor: 'white' }} />
-            <span style={{ backgroundColor: 'white' }} />
-            <span style={{ backgroundColor: 'white' }} />
-          </span>
-        </button>
-        <br/>
-        <br />
-      </div>
+            <span className="loading">
+              <span style={{ backgroundColor: 'white' }} />
+              <span style={{ backgroundColor: 'white' }} />
+              <span style={{ backgroundColor: 'white' }} />
+            </span>
+          </button>
+          <br/>
+          <br />
+        </div>
       : 
         <>
         {/* <p className="text-slate-500 mt-2">47,118 bios generated so far.</p> */}
         <div className="max-w-xl w-full">
-       
+        
           <div className="flex mt-10 items-center space-x-3">
-           <p className="text-left font-medium">
+            <p className="text-left font-medium">
               Submit your sketch.{' '}
               <span className="text-slate-500">
                 (doesn't need to be perfect)
@@ -185,11 +173,11 @@ export default function Page() {
           <> 
           <div className='mt-2'/>
           <Webcam 
-           ref={webcamRef}
-           screenshotFormat="image/jpeg"
-           minScreenshotWidth={800}
-           minScreenshotHeight={600}
-           />
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            minScreenshotWidth={800}
+            minScreenshotHeight={600}
+            />
           </>
           ) : (
           <>
@@ -220,10 +208,10 @@ export default function Page() {
               Submit & Exit to VS Code &rarr;
             </button>
           )
-         } 
-         </>
-         ):
-         (<button
+          } 
+          </>
+          ):
+          (<button
           className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-4 mt-4 hover:bg-black/80 w-full"
           disabled
         >
@@ -237,9 +225,6 @@ export default function Page() {
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         </>
         }
-      </main>
-      <br/>
-      <Footer />
     </div>
   );
 }

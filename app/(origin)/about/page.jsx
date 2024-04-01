@@ -1,12 +1,8 @@
-'use client';
+'use client'
 
 import React from 'react';
 import YouTube from 'react-youtube';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
-import { XMarkIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react';
+import { ArrowPathIcon, CloudArrowUpIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 
 // UI
 export default function Page() {
@@ -43,10 +39,7 @@ export default function Page() {
   ]
     
     return (
-      <>
-      <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen overflow-hidden">
-        <Header/> 
-        <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4">
+      <div className="flex flex-1 w-full flex-col items-center justify-center text-center px-4">
         <div className="bg-white mt-10">
           <div className="w-full">
             <div className="mx-auto max-w-2xl sm:text-center">
@@ -66,30 +59,27 @@ export default function Page() {
               <div className="-mt-2 p-6 flex-shrink-0">
                 <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-10">
                   <div className="mx-auto max-w-xs px-2">
-                  <h3 className="text-2xl font-bold tracking-tight text-gray-900">How it works</h3>
-                  <br/>
-                  <dl className="grid max-w-xl grid-cols-1 gap-x-3 gap-y-3 lg:max-w-none mt-2 lg:grid-cols-1 lg:gap-y-3">
-                {features.map((feature) => (
-                  <div key={feature.name} className="relative">
-                    <dt className="text-base font-semibold leading-7 text-slate-600">
-                      {/* <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                        <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
-                      </div> */}
-                      {feature.name}
-                    </dt>
-                    <dd className="mt-2 px-2 text-base leading-7">{feature.description}</dd>
-                  </div>
-                ))}
-              </dl>
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900">How it works</h3>
+                    <br/>
+                    <dl className="grid max-w-xl grid-cols-1 gap-x-3 gap-y-3 lg:max-w-none mt-2 lg:grid-cols-1 lg:gap-y-3">
+                      {features.map((feature) => (
+                        <div key={feature.name} className="relative">
+                          <dt className="text-base font-semibold leading-7 text-slate-600">
+                            {/* <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                              <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                            </div> */}
+                            {feature.name}
+                          </dt>
+                          <dd className="mt-2 px-2 text-base leading-7">{feature.description}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </main>
-        <Footer />
       </div>
-   </>
     );
 }

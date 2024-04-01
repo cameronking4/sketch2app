@@ -16,11 +16,13 @@
     "@tailwindcss/forms": "^0.5.3",
     "@vercel/analytics": "^0.1.8",
     "ai": "^2.1.21",
-    "axios": "^1.6.2",
+    "axios": "^1.6.8",
     "cloudinary": "^1.41.0",
     "confetti-explosion-react": "^0.1.2",
+    "firebase": "^10.10.0",
+    "firebase-admin": "^12.0.0",
     "headlessui": "^0.0.0",
-    "next": "^13.4.10",
+    "next": "^14.1.4",
     "openai-edge": "^1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -31,6 +33,7 @@
     "react-use-measure": "^2.1.1",
     "react-webcam": "^7.2.0",
     "react-youtube": "^10.1.0",
+    "stripe": "^14.23.0",
     "supports-color": "^9.4.0"
   },
   "devDependencies": {

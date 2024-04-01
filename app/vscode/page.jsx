@@ -18,7 +18,7 @@ export default function Page() {
   const vibe = searchParams.get('type');
   const fileName = searchParams.get('adhoc');
   const folderPath = searchParams.get('folder');
-  const OAI_APIKEY = process.env.OPENAI_API_KEY;  
+  const OAI_APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;  
   const CLOUDINARY_APISECRET = process.env.NEXT_PUBLIC_CLOUDINARY_APISECRET;
   const CLOUDINARY_APIKEY = process.env.NEXT_PUBLIC_CLOUDINARY_APIKEY;
   const CLOUDINARY_UPLOAD_URL = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL;

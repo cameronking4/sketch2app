@@ -7,6 +7,7 @@ import { cookies } from 'next/headers';
 const Page = async () => {
 	const uid = cookies().get("session-cookie").value.toString();
 	const access = await checkAccess(uid);
+	console.log(access);
 
 	if (!access.success) {
 		redirect('/subscribe');

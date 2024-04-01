@@ -1,6 +1,8 @@
 import axios from "axios";
+import { checkCount } from "./actions";
+
 // Replace your OpenAI API key with ENV variable
-export const OAI_APIKEY = process.env.OPENAI_API_KEY;
+export const OAI_APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
 // Prompts for GPT4 Vision Preview API 
 export const reactPrompt = 
@@ -160,6 +162,7 @@ export const upload = async (apikey, vibe, base64_img) => {
       },
     }
   );
+  await checkCount();
   let msg = res.data.choices[0].message.content;
   console.log(res.data);
   return msg;
@@ -207,6 +210,7 @@ export const reDo = async (apikey, response, textEdits, base64_img) => {
       },
     }
   );
+  await checkCount();
   let msg = res.data.choices[0].message.content;
   console.log(res.data);
   return msg;

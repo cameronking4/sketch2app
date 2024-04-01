@@ -3,7 +3,6 @@
 import { headers } from "next/headers";
 import { redirect } from 'next/navigation';
 import axios from 'axios';
-import supportsColor from 'supports-color';
 import { cookies } from 'next/headers';
 import admin from "../firebase/server";
 import { stripe } from "../lib/stripe";
@@ -101,16 +100,16 @@ export async function checkAccess(uid) {
   const userRef = db.collection("users").doc(uid);
   const userData = (await userRef.get()).data() || null;
   
-  if (userData && userData.count > 3) {
-    if (userData.openAIKey) {
+  if (userData) {
+    if (userData.count > 3) {
       return {
-        success: (await checkAPIKey(userData.openAIKey)).success,
+        success: (await checkAPIKey(userData.openAIKey)).success || (await checkSubscription(userData.subscription)).success,
         apiKey: userData.openAIKey
       };
     }
-    else if (userData.subscription) {
+    else {
       return {
-        success: (await checkSubscription(userData.subscription)).success,
+        success: true,
         apiKey: ""
       };
     }
@@ -124,17 +123,26 @@ export async function checkAccess(uid) {
 
 export async function saveAPIKey(uid, apiKey) {
   const userRef = db.collection("users").doc(uid);
-  const userData = (await userRef.get()).data() || null;
 
-  const res = await checkAPIKey(apiKey);
-  if (res.success) {
-    await userRef.update({
-      openAIKey: apiKey
-    });
+  if (apiKey) {
+    const res = await checkAPIKey(apiKey);
+    if (res.success) {
+      await userRef.update({
+        openAIKey: apiKey
+      });
+      return true;
+    }
+    else {
+      throw new Error(res.message);
+    }
   }
   else {
-    throw Error(res.message);
+    await userRef.update({
+      openAIKey: ""
+    });
+    return true;
   }
+
 }
 
 export async function getSubscriptionData(uid) {
@@ -181,7 +189,7 @@ export async function createStripeCheckoutSession(uid) {
       mode: 'subscription',
       customer_email: userData.email,
       line_items: [{
-        price: process.env.STRIPE_PRODUCT_ID,
+        price: process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID,
         quantity: 1
       }],
       success_url: `${headers().get("origin")}/api/subscription?session_id={CHECKOUT_SESSION_ID}`,
@@ -201,4 +209,25 @@ export async function cancelSubscripion(uid, subscriptionId) {
   }
 
   redirect("/subscribe");
+}
+
+export async function checkCount() {
+  const uid = cookies().get("session-cookie").value.toString();
+  
+  const userRef = db.collection("users").doc(uid);
+  const userData = (await userRef.get()).data() || null;
+  
+  if (userData) {
+    if (userData.count > 2) {
+      const res = await checkAccess(uid);
+      console.log(res);
+      if (!res.success) {
+        redirect("/subscribe");
+      }
+    }
+
+    await userRef.update({
+      count: userData.count + 1
+    });
+  }
 }

@@ -100,6 +100,7 @@ export default function Page({ apiKey }) {
 			console.log(response);
 		} catch (error) {
 			console.error("Error uploading to OpenAI:", error);
+			toast.error(error.message);
 		}
 		isGenerating(false); // Reset loading state
 	}
@@ -123,6 +124,7 @@ export default function Page({ apiKey }) {
 			await regenerate();
 		} catch (error) {
 			console.log("Regeneration failed:", error);
+			toast.error(error.message);
 		}
 		isRegenerating(false); // Reset loading state
 	};

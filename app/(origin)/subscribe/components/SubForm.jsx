@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+import { toast } from "react-hot-toast";
 import {
   saveAPIKey,
   createStripeCheckoutSession,
@@ -18,8 +19,10 @@ const SubForm = ({ uid, subData }) => {
     setKeyLoading(true);
     try {
       await saveAPIKey(uid, key);
+      toast.success("Success!")
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
     setKeyLoading(false);
   }
@@ -53,7 +56,6 @@ const SubForm = ({ uid, subData }) => {
           placeholder="sk-1234567890"
           value={key}
           onChange={e => setKey(e.target.value)}
-          required
         />
         <button
           type="submit"

@@ -101,7 +101,7 @@ export async function checkAccess(uid) {
   const userData = (await userRef.get()).data() || null;
   
   if (userData) {
-    if (userData.count > 3) {
+    if (userData.count > 2) {
       return {
         success: (await checkAPIKey(userData.openAIKey)).success || (await checkSubscription(userData.subscription)).success,
         apiKey: userData.openAIKey

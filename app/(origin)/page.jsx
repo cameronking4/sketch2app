@@ -1,4 +1,3 @@
-import React from 'react';
 import Main from "./components/MainCmp";
 import { checkAccess } from '../actions';
 import { redirect } from 'next/navigation';

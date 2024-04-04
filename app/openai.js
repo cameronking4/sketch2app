@@ -119,6 +119,8 @@ export const setPrompt = (prompt) => {
   
 //GPT4 Vision Preview API request to generate code
 export const upload = async (apikey, vibe, base64_img) => {
+  console.log("api_key=> ", apikey || OAI_APIKEY);
+
   let prompt = '';
   if(vibe === 'React') {
       prompt = setPrompt(reactPrompt);
@@ -170,7 +172,8 @@ export const upload = async (apikey, vibe, base64_img) => {
 
 // GPT4 request to adjust the generated code with user edits
 export const reDo = async (apikey, response, textEdits, base64_img) => {
-  console.log("base64", base64_img);
+  // console.log("base64", base64_img);
+  console.log("api_key=> ", apikey || OAI_APIKEY);
   const res = await axios.post(
     "https://api.openai.com/v1/chat/completions",
     {

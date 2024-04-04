@@ -102,10 +102,21 @@ export async function checkAccess(uid) {
   
   if (userData) {
     if (userData.count > 2) {
-      return {
-        success: (await checkAPIKey(userData.openAIKey)).success || (await checkSubscription(userData.subscription)).success,
-        apiKey: userData.openAIKey
-      };
+      const openai = userData.openAIKey ? (await checkAPIKey(userData.openAIKey)).success : false;
+      const subscription = userData.subscription? (await checkSubscription(userData.subscription)).success : false;
+
+      if (openai || subscription) {
+        return {
+          success: true,
+          apiKey: userData.openAIKey
+        };
+      }
+      else {
+        return {
+          success: false,
+          apiKey: ""
+        };
+      }
     }
     else {
       return {

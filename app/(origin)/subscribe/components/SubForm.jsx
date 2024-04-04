@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from "react-hot-toast";
 import {
   saveAPIKey,
@@ -9,10 +9,14 @@ import {
 } from '../../../actions';
 
 const SubForm = ({ uid, subData }) => {
-  console.log(subData);
-  const [key, setKey] = useState(subData.key.openAIKey || "");
+  console.log("subData=> ", subData);
+  const [key, setKey] = useState("");
   const [keyLoading, setKeyLoading] = useState(false);
   const [subLoading, setSubLoading] = useState(false);
+
+  useEffect(() => {
+    setKey(subData.key.openAIKey || "");
+  }, [subData]);
 
   const handleKey = async (e) => {
     e.preventDefault();

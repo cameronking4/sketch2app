@@ -5,7 +5,6 @@ import { getSubscriptionData } from "../../actions";
 const Page = async () => {
   const uid = cookies().get("session-cookie").value.toString();
 	const subData = await getSubscriptionData(uid);
-  console.log(subData);
 
   return (
     <div className="container px-6 py-20">

@@ -41,6 +41,7 @@ const ExampleImages =["https://github.com/cameronking4/sketch2app/blob/main/publ
 
 // UI
 export default function Page({ apiKey }) {
+	const [openAIKey, setOpenAIKey] = useState("");
 	const [img, setImg] = useState(null);
 	const webcamRef = useRef();
 	const [vibe, setVibe] = useState('React');
@@ -59,6 +60,10 @@ export default function Page({ apiKey }) {
 			setImg(ExampleImages[example]);
 		}
 	}, [example]);
+
+	useEffect(() => {
+		setOpenAIKey(apiKey);
+	}, [apiKey]);
 
 	//webcam config
 	const FACING_MODE_USER = "user";
@@ -94,7 +99,7 @@ export default function Page({ apiKey }) {
 	const sendUpload = async () => {
 		isGenerating(true);
 		try {
-			const response = await upload(apiKey, vibe, img);
+			const response = await upload(openAIKey, vibe, img);
 			toast.success("Success!")
 			setResponse(response);
 			console.log(response);
@@ -108,10 +113,10 @@ export default function Page({ apiKey }) {
 	// handle Regenerate button
 	const regenerate = async() => {
 		if(responseText.length > 7) {
-			const newResponse = await reDo(apiKey, response, responseText, img);
+			const newResponse = await reDo(openAIKey, response, responseText, img);
 			setResponse(newResponse);
 		} else {
-			const newResponse = await upload(apiKey, vibe, img);
+			const newResponse = await upload(openAIKey, vibe, img);
 			setResponse(newResponse);
 		}
 		toast.success("Regenerated!");

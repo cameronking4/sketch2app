@@ -1,5 +1,5 @@
 # [Sketch-2-App](https://www.sketch2app.io/)
-Open Source until May 1, 2024!!
+This repo will no longer be maintained after May 1, 2024. Feel free to clone this old version or make use of Sketch2App web app 2.0 or the VS code extension
 <a href="https://www.futurepedia.io/tool/sketch2app?utm_source=sketch2app_embed" style="width: 250px; height: 54px;" width="250" height="54">
         <img src="https://www.futurepedia.io/api/image-widget?toolId=90af35d4-bb76-4223-ad12-c4ed4b2a0499" alt="Sketch2App | Featured on Futurepedia" style="width: 250px; height: 54px;" width="250" height="54">
         </a>

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation'
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -13,6 +14,11 @@ import { toast } from "react-hot-toast";
 const Page = () => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [githubLoading, setGithubLoading] = useState(false);
+
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get('sessionId');
+  const type = searchParams.get('type');
+  const folder = searchParams.get('folder');
 
   const signInWithGoogle = async () => {
     setGoogleLoading(true);
@@ -28,7 +34,7 @@ const Page = () => {
         subscription: "",
         count: 0
       };
-      await login(userData);
+      await login(userData, sessionId ? `/vscode?sessionId=${sessionId}&type=${type}&folder=${folder}` : '/');
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +56,7 @@ const Page = () => {
         count: 0
       };
       console.log(userData);
-      await login(userData);
+      await login(userData, sessionId ? `/vscode?sessionId=${sessionId}&type=${type}&folder=${folder}` : '/');
     } catch (error) {
       if (error.code === "auth/account-exists-with-different-credential") {
         toast.error("You already have account with Gmail",

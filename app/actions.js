@@ -8,17 +8,17 @@ import admin from "../firebase/server";
 import { stripe } from "../lib/stripe";
 const db = admin.firestore();
 
-export async function login(user) {
+export async function login(user, redirectURL) {
   const uid = user.uid;
   const userRef = db.collection("users").doc(uid);
   const userSnapshot = await userRef.get();
   cookies().set("session-cookie", uid);
   
   if (userSnapshot.exists) {
-    redirect("/");
+    redirect(redirectURL);
   } else {
     await db.collection("users").doc(uid).set(user);
-    redirect("/");
+    redirect(redirectURL);
   }
 }
 

@@ -4,6 +4,8 @@
 </a>
 
 ### Tried Sketch2App? Please give us feedback [here](https://bit.ly/sketch2app)!
+![Green and Blue Modern QR Code Placement Poster (1)](https://github.com/cameronking4/sketch2app/assets/35708477/765aebe1-611d-43fb-bbcb-5ff3355b1be6)
+
 
 NOTE:
 This repo will no longer be maintained after May 1, 2024. This project was originally open source but the live demo link is costing more than expected to keep running. Due to traffic, we will invest in more capabilities and will be closing source of these improvements. To get started, go to Sketch2App web app 2.0 or the VS code extension!
@@ -28,3 +30,5 @@ pnpm run dev
 Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cameronking4/sketch2code&env=OPENAI_API_KEY&project-name=sketch-2-code-hack&repo-name=sketch2code)
+
+

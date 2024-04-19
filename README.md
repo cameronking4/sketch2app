@@ -1,7 +1,14 @@
 # [Sketch-2-App](https://www.sketch2app.io/)
+
+## Use GPT4 Vision to generate web app code (CRA + Tailwind)
 <a href="https://www.futurepedia.io/tool/sketch2app?utm_source=sketch2app_embed">
 <img src="https://www.futurepedia.io/api/image-widget?toolId=90af35d4-bb76-4223-ad12-c4ed4b2a0499" alt="Sketch2App | Featured on Futurepedia">
 </a>
+
+Use React to generate a web app with Tailwind CSS or React Native for a mobile app prototype. It will generate code and a sandbox to preview the app within seconds of capturing your wireframe/sketch
+
+[![Sketch2Code](https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D1VC_a0JP7TM)](https://youtu.be/1pWKNbSsI3o)
+
 
 ### Tried Sketch2App? Please give us feedback [here](https://bit.ly/sketch2app)!
 ![Green and Blue Modern QR Code Placement Poster (1)](https://github.com/cameronking4/sketch2app/assets/35708477/765aebe1-611d-43fb-bbcb-5ff3355b1be6)
@@ -9,11 +16,6 @@
 
 NOTE:
 This repo will no longer be maintained after May 1, 2024. This project was originally open source but the live demo link is costing more than expected to keep running. Due to traffic, we will invest in more capabilities and will be closing source of these improvements. To get started, go to Sketch2App web app 2.0 or the VS code extension!
-
-## Use GPT4 Vision to generate web app code (CRA + Tailwind)
-Use React to generate a web app with Tailwind CSS or React Native for a mobile app prototype. It will generate code and a sandbox to preview the app within seconds of capturing your wireframe/sketch
-
-[![Sketch2Code](https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D1VC_a0JP7TM)](https://youtu.be/1pWKNbSsI3o)
 
 ## Running Locally
 
